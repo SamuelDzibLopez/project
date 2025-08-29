@@ -1,0 +1,112 @@
+/*menu-desktop*/
+.menu-desktop {
+    width: 255px;
+    min-width: 255px;
+    min-height: 100vb;
+    max-height: 100vb;
+    overflow: auto;
+    /* Oculta la barra de desplazamiento en Firefox */
+    scrollbar-width: none;
+    background-color: var(--color-gray-second);
+
+    display: flex;
+    justify-content: start;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    position: fixed;
+    top: 0;
+
+    padding: 15px 0px;
+    padding: 10px;
+    box-shadow: 10px 0px 5px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.menu-desktop::-webkit-scrollbar {
+    display: none;
+}
+
+/*Div de logo TECNM*/
+.div-logo {
+    border-bottom: 3px solid var(--color-blue-primary);
+    padding: 5px;
+}
+
+/*img de TECNM*/
+.div-logo img {
+    width: 100%;
+}
+
+/*div de enlaces a modulo*/
+.div-options {
+    min-width: auto;
+    margin: 30px 0px;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/*enlace a modulo*/
+.div-option-menu {
+    display: inline-block;
+    width: 165px;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    align-content: center;
+    gap: 9px;
+    flex-wrap: wrap;
+
+    font-size: var(--font-20px);
+    font-family: var(--family-arial);
+    color: var(--color-blue-primary);
+
+    text-decoration: none;
+}
+
+.div-option-menu:hover,
+.div-option-menu-active:hover {
+    text-decoration: 3px underline;
+}
+
+.div-option-menu-active {
+
+    font-weight: bold;
+}
+
+.div-option-menu img,
+.div-option-menu-active img {
+    height: 40px;
+}
+
+.btn-close-session {
+    padding: 10px 20px;
+    background-color: crimson;
+    font-family: var(--family-arial);
+    font-size: var(--font-20px);
+    border: none;
+    font-weight: bold;
+    box-shadow: 10px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+.no_underline:hover {
+    text-decoration: none;
+}
+
+@media (max-width: 900px) {
+    .menu-desktop {
+        display: none;
+    }
+
+    dialog {
+        transform: translate(-50%, -50%);
+    }
+
+}

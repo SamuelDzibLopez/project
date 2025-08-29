@@ -1,0 +1,18 @@
+.font-title {
+    font-family: var(--family-arial);
+    font-size: var(--font-35px);
+    color: var(--color-blue-primary);
+    text-decoration: underline;
+
+    text-align: center;
+}
+
+.font-subtitle {
+    font-family: var(--family-arial);
+    font-size: var(--font-30px);
+    color: var(--color-blue-primary);
+    text-decoration: underline;
+    font-weight:700;
+
+    text-align: center;
+}

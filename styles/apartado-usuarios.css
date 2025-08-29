@@ -1,0 +1,91 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.div-usuarios {
+
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.div-usuario {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    padding:10px;
+    gap: 20px;
+    flex-wrap: wrap;
+    text-decoration: none;
+    width: 100%;
+
+    border-bottom: 1px solid var(--color-blue-primary);
+
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+}
+
+.div-usuario img {
+    display: inline-block;
+    height: 90px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.user-div-main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+}
+
+.user-name, .user-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    justify-content: center;
+    gap: 5px;
+
+    text-align: center;
+}
+
+.user-name {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+}
+
+.user-name-name {
+    font-family: var(--family-arial);
+    font-size: var(--font-30px);
+    color: var(--color-blue-primary);        text-transform: uppercase;
+    font-weight: lighter;
+}
+
+.user-rol {
+    font-family: var(--family-arial);
+    font-size: var(--font-16px);
+    color: var(--color-blue-primary);
+    font-weight: lighter;
+}
+
+.user-rol-bold { 
+    font-weight: bold;
+}

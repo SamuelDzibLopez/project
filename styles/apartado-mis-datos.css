@@ -1,0 +1,67 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.div-mis-datos {
+    margin: 20px;
+    display: flex;
+
+    flex-wrap: wrap;
+    justify-content:space-around;
+    align-items: center;
+    align-content: center;
+
+}
+
+.div-foto-perfil {
+    display: flex;
+}
+
+.input-foto-perfil {
+    display: none;
+}
+
+.img-foto-perfil {
+
+    width: 110px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+    max-width: 100%;
+}
+
+.div-datos-mis-datos {
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+
+    flex-direction: column;
+
+    margin: 20px;
+
+    gap: 20px;
+
+}
+
+.input-mis-datos {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    width: 100%;
+    color: var(--color-blue-primary);
+    font-size: var(--font-20px);
+    font-family: var(--family-arial);
+    text-align: center;
+    border: 1px solid black;padding: 5px;
+    background-color: var(--color-white);
+}
+
+.none {
+    border: none;
+}

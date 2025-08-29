@@ -1,0 +1,122 @@
+header {
+    background-color: var(--color-blue-primary);
+    padding: 25px;
+
+    display: flex;
+    justify-content:space-evenly;
+    align-items: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 100%;
+
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 1;
+}
+
+.form-search {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 10px;
+    flex: 1;
+
+    max-width: 70%;
+}
+
+.div-search {
+    background-color: var(--color-gray-second);
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        gap: 10px;
+
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: auto;
+        width: 100%;
+        border-radius: 7px;
+}
+
+.div-search input {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    width: 100px;
+
+    height: 48px;
+    border: none;
+    background-color: transparent;
+    border-radius: 7px;
+
+    font-size: var(--font-20px);
+    font-family: var(--family-arial);
+    color: var(--color-blue-primary);
+    font-weight: bold;
+    padding: 0px 20px;
+
+}
+
+.btn-header {
+    padding: 3px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+
+}
+
+.btn-header img {
+    display: inline-block;
+    height: 40px;
+    aspect-ratio: 1/1;
+}
+
+.div-header-user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 10px;
+
+    flex-wrap: wrap;
+}
+
+.div-header-user img {
+    width: 40px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.div-header-user p {
+    font-size: var(--font-20px);
+    font-family: var(--family-arial);
+    color: var(--color-white);
+}
+
+.movile, .movile-2 {
+    display: none;
+}
+
+@media (max-width: 900px) {
+
+    .movile {
+        display: inline-block;
+    }
+}
+
+@media (max-width: 650px) {
+    .form-search {
+        display: none;
+    }
+
+    .movile-2 {
+        display: inline-block;
+    }
+}
