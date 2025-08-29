@@ -68,7 +68,7 @@ $form.addEventListener('submit', async function (event) {
         }
 
         if (data.ok) {
-            alert('Usuario creado correctamente.');
+            alert('Contacto creado correctamente.');
             $form.reset();
             window.location.href = directorio;
             // Si deseas también resetear imágenes previas, puedes hacerlo aquí.
