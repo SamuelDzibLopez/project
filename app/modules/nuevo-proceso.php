@@ -580,7 +580,7 @@ require_once './../../server/php/permisos.php';
 
                                     <div class="input-group mb-3">
                                         <!--Fecha-->
-                                        <input class="form-control" list="mejoras" id="noConformidadFecha" placeholder="Fecha">
+                                        <input class="form-control" list="mejoras" id="noConformidadFecha" placeholder="Fecha" type="date">
                                     </div>
 
                                     <div class="input-group mb-3">
@@ -594,8 +594,30 @@ require_once './../../server/php/permisos.php';
                                     </div>
 
                                     <div class="input-group mb-3">
-                                        Estado
+
+                                        <!--Estado-->
+                                        <div class="form-check form-check-inline">
+                                            <input 
+                                            class="form-check-input" 
+                                            type="radio" 
+                                            name="estadoEliminar" 
+                                            id="radioEliminar" 
+                                            value="eliminar">
+                                            <label class="form-check-label" for="radioEliminar">Eliminar</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline">
+                                            <input 
+                                            class="form-check-input" 
+                                            type="radio" 
+                                            name="estadoEliminar" 
+                                            id="radioNoEliminar" 
+                                            value="noEliminar" 
+                                            checked>
+                                            <label class="form-check-label" for="radioNoEliminar">No Eliminar</label>
+                                        </div>
                                     </div>
+
 
                                     <div class="input-group mb-3">
                                         <!--Personal que verifica-->
