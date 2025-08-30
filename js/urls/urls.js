@@ -11,13 +11,17 @@ export const url_usuarios_modificar_usuario = "/project/server/php/usuarios/modi
 export const url_usuarios_obtener_info_usuario = "/project/server/php/usuarios/obtener-info-usuario.php?idUsuario=";
 export const url_usuarios_validar_usuario = "/project/server/php/usuarios/validar-usuario.php?idUsuario=";
 export const url_usurios_eliminar_usuario = "/project/server/php/usuarios/delete.php?idUsuario=";
+export const url_usuarios_obtener_id_usuarios = "/project/server/php/usuarios/obtener-id-usuarios.php"
 
 //Mi perfil
 export const url_usuarios_obtener_datos_mi_perfil = "/project/server/php/usuarios/obtener-info-mi-perfil.php"
-export const url_usuarios_modificar_datos_mi_perfil = "/project/server/php/usuarios/modificar-mi-perfil.php"
+export const url_usuarios_modificar_datos_mi_perfil = "/project/server/php/usuarios/modificar-mi-perfil.php";
 
 //Procesos
 export const url_procesos_obtener_procesos =  "/project/server/php/procesos/obtener-procesos.php?pagina=";
+
+//Auditorias
+export const url_auditorias_create_auditoria = "/project/server/php/auditorias/create-auditoria.php";
 
 //Contactos
 export const url_contactos_obtener_contactos = "/project/server/php/contactos/obtener-contactos.php?pagina=";
@@ -25,6 +29,7 @@ export const url_contactos_crear_contacto =  "/project/server/php/contactos/crea
 export const url_contactos_modificar_contacto =  "/project/server/php/contactos/modificar-contacto.php?idContacto=";
 export const url_contactos_obtener_info_contacto =  "/project/server/php/contactos/obtener-info-contacto.php?idContacto=";
 export const url_contactos_eliminar_contacto = "/project/server/php/contactos/delete.php?idContacto=";
+export const url_contactos_obtener_id_contactos = "/project/server/php/contactos/obtener-id-contactos.php";
 
 
 //URLS

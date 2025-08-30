@@ -1,123 +1,31 @@
 <?php
 header("Content-Type: application/json");
-
 require_once './../permisos.php'; 
 require_once './../conexion.php';
 
 try {
-    // ==========================
-    // VARIABLES DE DATOS INICIALES
-    // ==========================
+    // Recibir JSON del body
+    $input = json_decode(file_get_contents("php://input"), true);
 
-    // Proceso
-    $tipoProceso = "Auditoría Interna";
-    $folioProceso = "2025-001";
-    $estadoProceso = 1;
+    if (!$input) {
+        throw new Exception("No se recibieron datos válidos en el body");
+    }
 
-    // Auditoría
-    $auditoriaData = [
-        "numAuditoria"        => 1001,
-        "proceso"             => "Proceso de Auditoría 2025",
-        "fecha"               => "2025-07-01",
-        "documentosReferencia"=> "Documento X, Documento Y",
-        "objetivo"            => "Verificar cumplimiento",
-        "alcance"             => "Área administrativa",
-        "fechaEmision"        => "2025-07-02",
-        "ciudadInicioApertura"=> "Mérida",
-        "fechaInicioApertura" => "2025-07-01 09:00:00",
-        "lugarInicioApertura" => "Sala 101",
-        "fechaFinalApertura"  => "2025-07-01 12:00:00",
-        "ciudadInicioCierre"  => "Mérida",
-        "fechaInicioCierre"   => "2025-07-02 09:00:00",
-        "lugarInicioCierre"   => "Sala 102",
-        "fechaFinalCierre"    => "2025-07-02 12:00:00",
-        "fechaEntregaEvidencia"=> "2025-07-03",
-        "idElabora"           => 1,
-        "idValida"            => 2,
-        "idCoordinador"       => 3,
-        "idRecibe"            => 4
-    ];
-
-    // Usuarios vinculados al proceso
-    $usuariosProceso = [1, 2, 3];
-
-    // Actividades
-    $actividades = [
-        [
-            "horarioInicial" => "2025-07-01 09:00:00",
-            "horarioFinal"   => "2025-07-01 12:00:00",
-            "proceso"        => "Academico",
-            "actividad"      => "Actividad 1",
-            "requisito"      => "1.1",
-            "area"           => "Sala 1",
-            "participantes"  => [1,2],
-            "contactados"    => [1,2]
-        ],
-        [
-            "horarioInicial" => "2025-07-01 09:00:00",
-            "horarioFinal"   => "2025-07-01 12:00:00",
-            "proceso"        => "Administracion",
-            "actividad"      => "Actividad 2",
-            "requisito"      => "2.1, 2.2, 2.3",
-            "area"           => "Sala 2",
-            "participantes"  => [1,2],
-            "contactados"    => [1,2,3,4]
-        ],
-        [
-            "horarioInicial" => "2025-07-01 09:00:00",
-            "horarioFinal"   => "2025-07-01 12:00:00",
-            "proceso"        => "Calidad",
-            "actividad"      => "Actividad 3",
-            "requisito"      => "3.1, 3.2",
-            "area"           => "Sala 3",
-            "participantes"  => [1,2,3],
-            "contactados"    => [1,2,3]
-        ]
-    ];
-
-    // Institutos relacionados
-    $institutos = [1,2];
-
-    // Personal contactado
-    $personalContactado = [1,2,3,4];
-
-    // Auditores
-    $auditores = [1,2,3,4];
-
-    // Auditores líderes
-    $auditoresLideres = [1,2];
-
-    // Oportunidades
-    $oportunidades = [
-        "Mejorar proceso de documentación 1",
-        "Mejorar proceso de documentación 2",
-        "Mejorar proceso de documentación 3"
-    ];
-
-    // Comentarios
-    $comentarios = [
-        "Comentario inicial sobre auditoría 1",
-        "Comentario inicial sobre auditoría 2",
-        "Comentario inicial sobre auditoría 3"
-    ];
-
-    // Conclusiones
-    $conclusiones = [
-        "Conclusión de auditoría satisfactoria 1",
-        "Conclusión de auditoría satisfactoria 2",
-        "Conclusión de auditoría satisfactoria 3"
-    ];
-
-    // No conformidades
-    $noConformidades = [
-        ["Falta de control en documentación 1", "ISO 9001:2015", "2025-001/01", "2025-07-02", "", "RAC-001/01", 1, 2, 3],
-        ["Falta de control en documentación 2", "ISO 9001:2015", "2025-001/02", "2025-07-02", "", "RAC-001/02", 1, 2, 3],
-        ["Falta de control en documentación 3", "ISO 9001:2015", "2025-001/03", "2025-07-02", "", "RAC-001/03", 1, 2, 3]
-    ];
-
-    // ==========================
-    // EJECUCIÓN DEL PROCESO
-    // ==========================
+    // Variables
+    $tipoProceso      = $input["tipoProceso"];
+    $folioProceso     = $input["folioProceso"];
+    $estadoProceso    = $input["estadoProceso"];
+    $auditoriaData    = $input["auditoriaData"];
+    $usuariosProceso  = $input["usuariosProceso"];
+    $actividades      = $input["actividades"];
+    $institutos       = $input["institutos"];
+    $personalContactado = $input["personalContactado"];
+    $auditores        = $input["auditores"];
+    $auditoresLideres = $input["auditoresLideres"];
+    $oportunidades    = $input["oportunidades"];
+    $comentarios      = $input["comentarios"];
+    $conclusiones     = $input["conclusiones"];
+    $noConformidades  = $input["noConformidades"];
 
     $pdo->beginTransaction();
 
@@ -201,22 +109,34 @@ try {
 
     // 8. OPORTUNIDADES
     foreach ($oportunidades as $op) {
-        $pdo->prepare("INSERT INTO oportunidades (idAuditoria, oportunidad) VALUES (?, ?)")->execute([$idAuditoria, $op]);
+        $pdo->prepare("INSERT INTO oportunidades (idAuditoria, oportunidad) VALUES (?, ?)")->execute([$idAuditoria, $op["oportunidad"]]);
     }
 
     // 9. COMENTARIOS
     foreach ($comentarios as $com) {
-        $pdo->prepare("INSERT INTO comentarios (idAuditoria, comentario) VALUES (?, ?)")->execute([$idAuditoria, $com]);
+        $pdo->prepare("INSERT INTO comentarios (idAuditoria, comentario) VALUES (?, ?)")->execute([$idAuditoria, $com["comentario"]]);
     }
 
     // 10. CONCLUSIONES
     foreach ($conclusiones as $con) {
-        $pdo->prepare("INSERT INTO conclusiones (idAuditoria, conclusion) VALUES (?, ?)")->execute([$idAuditoria, $con]);
+        $pdo->prepare("INSERT INTO conclusiones (idAuditoria, conclusion) VALUES (?, ?)")->execute([$idAuditoria, $con["conclusion"]]);
     }
 
     // 11. NO CONFORMIDADES
     foreach ($noConformidades as $nc) {
-        $pdo->prepare("INSERT INTO noConformidades (idAuditoria, descripcion, requisito, folio, fecha, accion, numRAC, estado, idVerifica, idLibera) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")->execute(array_merge([$idAuditoria], $nc));
+        $pdo->prepare("INSERT INTO noConformidades (idAuditoria, descripcion, requisito, folio, fecha, accion, numRAC, estado, idVerifica, idLibera) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+            ->execute([
+                $idAuditoria,
+                $nc["descripcion"],
+                $nc["requisito"],
+                $nc["folio"],
+                $nc["fecha"],
+                $nc["accion"],
+                $nc["numRAC"],
+                $nc["estado"],
+                $nc["idVerifica"],
+                $nc["idLibera"]
+            ]);
     }
 
     // Confirmar transacción
@@ -226,7 +146,7 @@ try {
         "status" => "success",
         "ok" => true,
         "statusCode" => 201,
-        "message" => "Proceso y auditoría creados con éxito",
+        "message" => "Auditoría creada con éxito",
         "data" => [
             "idProceso" => $idProceso,
             "idAuditoria" => $idAuditoria
@@ -234,7 +154,9 @@ try {
     ]);
 
 } catch (Exception $e) {
-    $pdo->rollBack();
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
     echo json_encode([
         "status" => "error",
         "ok" => false,
@@ -243,3 +165,5 @@ try {
         "data" => null
     ]);
 }
+
+

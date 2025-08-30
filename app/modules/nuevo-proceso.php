@@ -60,6 +60,7 @@ require_once './../../server/php/permisos.php';
                         <!-- Auditoria -->
                         <div class="div-gray" id="auditoria">
                             <form class="div-main-blur" id="form-auditoria">
+
                                 <!--Institutos-->
                                 <div class="div-subtitle">
                                     <img src="/project/sources/icons/icon-proyectos.svg" alt="">
@@ -89,51 +90,108 @@ require_once './../../server/php/permisos.php';
                                 <hr class="hr-blue">
                                 <div class="div-mis-datos">
                                     <div class="div-datos-mis-datos">
-                                        <div class="form-floating mb-3">
-                                            <textarea class="form-control" placeholder="objetivo" id="objetivo"
-                                                style="height: 100px"></textarea>
-                                            <label for="queja">Objetivo</label>
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                            <textarea class="form-control" placeholder="alcance" id="alcance"
-                                                style="height: 100px"></textarea>
-                                            <label for="alcance">Alcance</label>
-                                        </div>
+                                        
+                                        <!--Numero de auditoria-->
                                         <div class="mb-3">
                                             <label for="numero" class="form-label">Número de auditoria:</label>
                                             <input type="text" class="form-control" id="numero">
                                         </div>
+
+                                        <!--Tipo de proceso-->
                                         <div class="mb-3">
-                                            <label for="carrera" class="form-label">Proceso:</label>
-                                            <select class="form-select" id="carrera" required>
+                                            <label for="proceso" class="form-label">Tipo de proceso:</label>
+                                            <select class="form-select" id="proceso">
                                                 <option value="" selected disabled>Seleccione un proceso</option>
                                                 <option value="Academico">Academico</option>
                                                 <option value="Vinculacion">Vinculación</option>
                                             </select>
                                         </div>
+
+                                        <!--Fecha-->
                                         <div class="mb-3">
-                                            <label for="lider" class="form-label">Auditor lider:</label>
-                                            <select class="form-select" id="lider">
-                                                <option value="" selected>Seleccione el auditor lider</option>
+                                            <label for="fecha" class="form-label">Fecha de realización de auditoria:</label>
+                                            <input type="date" class="form-control" id="fecha">
+                                        </div>
+
+                                        <!--Documentos-->
+                                        <div class="mb-3">
+                                            <label for="documentos" class="form-label">Documentos de Referencia:</label>
+                                            <input type="text" class="form-control" id="documentos">
+                                        </div>
+
+                                        <!--Objetivo-->
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control" placeholder="objetivo" id="objetivo"
+                                                style="height: 100px"></textarea>
+                                            <label for="queja">Objetivo</label>
+                                        </div>
+
+                                        <!--Alcance-->
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control" placeholder="alcance" id="alcance"
+                                                style="height: 100px"></textarea>
+                                            <label for="alcance">Alcance</label>
+                                        </div>
+
+                                        <!--Fecha de emision-->
+                                        <div class="mb-3">
+                                            <label for="fechaEmision" class="form-label">Fecha de emisión de informe:</label>
+                                            <input type="date" class="form-control" id="fechaEmision">
+                                        </div>
+
+                                        <!-- Personal que elabora -->
+                                        <div class="mb-3">
+                                            <label for="idElabora" class="form-label">Persona que elabora:</label>
+                                            <select class="form-select" id="idElabora">
+                                                <option value="" selected disabled>Seleccione al personal que elabora</option>
                                             </select>
                                         </div>
+
+                                        <!-- Personal que valida -->
                                         <div class="mb-3">
-                                            <select class="form-select" id="lider2">
-                                                <option value="" selected>Seleccione el auditor lider</option>
+                                            <label for="idValida" class="form-label">Persona que valida:</label>
+                                            <select class="form-select" id="idValida">
+                                                <option value="" selected disabled>Seleccione al personal que valida</option>
                                             </select>
                                         </div>
+
+                                        <!-- Coordinador -->
                                         <div class="mb-3">
-                                            <select class="form-select" id="lider3">
-                                                <option value="" selected>Seleccione el auditor lider</option>
+                                            <label for="idCoordinador" class="form-label">Coordinador:</label>
+                                            <select class="form-select" id="idCoordinador">
+                                                <option value="" selected disabled>Seleccione al coordinador</option>
                                             </select>
                                         </div>
+
+                                        <!-- Personal que recibe -->
                                         <div class="mb-3">
-                                            <label for="lider" class="form-label">Persona que recibe:</label>
-                                            <select class="form-select" id="recibe" required>
-                                                <option value="" selected disabled>Seleccione al personal que recibe
-                                                </option>
+                                            <label for="idRecibe" class="form-label">Persona que recibe:</label>
+                                            <select class="form-select" id="idRecibe">
+                                                <option value="" selected disabled>Seleccione al personal que recibe</option>
                                             </select>
                                         </div>
+                                    </div>
+                                </div>
+
+                                <!--Auditores Lideres-->
+                                <div class="div-subtitle">
+                                    <img src="/project/sources/icons/icon-proyectos.svg" alt="">
+                                    <h2 class="font-subtitle">Auditores lideres</h2>
+                                </div>
+                                <hr class="hr-blue">
+
+                                <div class="div-mis-datos">
+                                    <label for="auditoresLideres" class="form-label">Agrega
+                                        auditor lider:</label>
+                                    <div class="input-group mb-3">
+                                        <select class="form-control" list="auditor" id="auditoresLideres"
+                                            placeholder="Buscar usuario...">
+                                            <option value="" disebled> Agrege participantes</option>
+                                        </select>
+                                        <button class="btn btn-primary" type="button" id="btnAuditoresLideres">Agregar</button>
+                                    </div>
+                                    <!--Div de auditores lideres-->
+                                    <div class="div-participantes inputs-responsive" id="divAuditoresLideres">
                                     </div>
                                 </div>
 
@@ -169,16 +227,28 @@ require_once './../../server/php/permisos.php';
 
                                 <div class="div-mis-datos">
                                     <div class="div-datos-mis-datos inputs-responsive">
+
+                                        <!--Cuidad-->
+                                        <div class="mb-3">
+                                            <label for="cuidadApertura" class="form-label">Ciudad:</label>
+                                            <input type="text" class="form-control" id="cuidadApertura" value="Mérida, Yuc.">
+                                        </div>
+
+                                        <!--Fecha de inicio-->
                                         <div class="mb-3">
                                             <label for="inicioApertura" class="form-label ">Fecha y hora de
                                                 inicio</label>
                                             <input type="datetime-local" class="form-control" id="inicioApertura">
                                         </div>
+
+                                        <!--Fecha de final-->
                                         <div class="mb-3">
                                             <label for="finApertura" class="form-label">Fecha y hora de
                                                 final</label>
                                             <input type="datetime-local" class="form-control" id="finApertura">
                                         </div>
+
+                                        <!--Lugar-->
                                         <div class="mb-3">
                                             <label for="areaApertura" class="form-label">Areá/Sitio:</label>
                                             <input type="text" class="form-control" id="areaApertura">
@@ -196,16 +266,26 @@ require_once './../../server/php/permisos.php';
 
                                 <div class="div-mis-datos">
                                     <div class="div-datos-mis-datos">
+
+                                        <!--Cuidad-->
                                         <div class="mb-3">
-                                            <label for="inicioCierre" class="form-label">Fecha y hora de
-                                                inicio</label>
+                                            <label for="cuidadCierre" class="form-label">Ciudad:</label>
+                                            <input type="text" class="form-control" id="cuidadCierre" value="Mérida, Yuc.">
+                                        </div>
+
+                                        <!--Fecha de inicio-->
+                                        <div class="mb-3">
+                                            <label for="inicioCierre" class="form-label">Fecha y hora de inicio</label>
                                             <input type="datetime-local" class="form-control" id="inicioCierre">
                                         </div>
+
+                                        <!--Fecha de final-->
                                         <div class="mb-3">
-                                            <label for="finCierre" class="form-label">Fecha y hora de
-                                                final</label>
+                                            <label for="finCierre" class="form-label">Fecha y hora de final</label>
                                             <input type="datetime-local" class="form-control" id="finCierre">
                                         </div>
+
+                                        <!--lugar-->
                                         <div class="mb-3">
                                             <label for="areaCierre" class="form-label">Areá/Sitio:</label>
                                             <input type="text" class="form-control" id="areaCierre">
@@ -224,9 +304,8 @@ require_once './../../server/php/permisos.php';
                                 <div class="div-mis-datos">
                                     <div class="div-datos-mis-datos">
                                         <div class="mb-3">
-                                            <label for="entregaEvidencia" class="form-label">Fecha de entrega de
-                                                evidencia</label>
-                                            <input type="datetime-local" class="form-control" id="entregaEvidencia">
+                                            <label for="entregaEvidencia" class="form-label">Fecha de entrega de evidencia</label>
+                                            <input type="date" class="form-control" id="entregaEvidencia">
                                         </div>
                                     </div>
                                 </div>
@@ -247,6 +326,7 @@ require_once './../../server/php/permisos.php';
                                         <input type="datetime-local" class="form-control inputs-responsive"
                                             id="inicioActividad">
                                     </div>
+
                                     <!--Fecha y Hora final-->
                                     <div class="mb-3 inputs-responsive">
                                         <label for="finActividad" class="form-label inputs-responsive">Fecha y hora de
@@ -254,6 +334,7 @@ require_once './../../server/php/permisos.php';
                                         <input type="datetime-local" class="form-control inputs-responsive"
                                             id="finActividad">
                                     </div>
+
                                     <!--Tipo de proceso-->
                                     <label for="tipoProceso" class="form-label">Tipo de proceso:</label>
 
@@ -266,12 +347,14 @@ require_once './../../server/php/permisos.php';
                                             <option value="Ambiental">Ambiental</option>
                                         </select>
                                     </div>
+
                                     <!--Actividad-->
                                     <div class="form-floating inputs-responsive">
                                         <textarea class="form-control inputs-responsive" placeholder="Actividad"
                                             id="actividadTexto" style="height: 100px"></textarea>
                                         <label for="actividadTexto">Actividad</label>
                                     </div>
+
                                     <!--Requisito/Criterio-->
                                     <div class="mb-3 inputs-responsive">
                                         <label for="requisitoCriterio"
@@ -279,6 +362,7 @@ require_once './../../server/php/permisos.php';
                                         <input type="text" class="form-control inputs-responsive"
                                             id="requisitoCriterio">
                                     </div>
+
                                     <!--Agregar Participantes-->
                                     <label for="participantesActividad" class="form-label">Agrega participantes:</label>
                                     <div class="input-group mb-3">
@@ -289,6 +373,7 @@ require_once './../../server/php/permisos.php';
                                         <button class="btn btn-primary" type="button"
                                             id="btnParticipantesActividad">Agregar</button>
                                     </div>
+
                                     <!--Div de participantes-->
                                     <div class="div-participantes inputs-responsive" id="divParticipantesActividad">
                                     </div>
@@ -303,9 +388,11 @@ require_once './../../server/php/permisos.php';
                                         <button class="btn btn-primary" type="button"
                                             id="btnContactosActividad">Agregar</button>
                                     </div>
+
                                     <!--Div de contactos-->
                                     <div class="div-participantes inputs-responsive" id="divContactosActividad">
                                     </div>
+
                                     <!--Area/Sitio-->
                                     <div class="mb-3 inputs-responsive">
                                         <label for="areaSitioActividad"
@@ -475,13 +562,53 @@ require_once './../../server/php/permisos.php';
 
                                 <div class="div-mis-datos">
                                     <label for="noConformidad" class="form-label">Agrega No Conformidad:</label>
+
                                     <div class="input-group mb-3">
-                                        <input class="form-control" list="mejoras" id="noConformidad"
-                                            placeholder="Agregar no conformidad">
+                                        <!--No confomidad-->
+                                        <input class="form-control" list="mejoras" id="noConformidad" placeholder="Agregar no conformidad">
                                     </div>
+
                                     <div class="input-group mb-3">
-                                        <input class="form-control" list="mejoras" id="noConformidadRequisitos"
-                                            placeholder="Requisito">
+                                        <!--Requisito-->
+                                        <input class="form-control" list="mejoras" id="noConformidadRequisitos" placeholder="Requisito">
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <!--Folio-->
+                                        <input class="form-control" list="mejoras" id="noConformidadFolio" placeholder="Folio">
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <!--Fecha-->
+                                        <input class="form-control" list="mejoras" id="noConformidadFecha" placeholder="Fecha">
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <!--Accion-->
+                                        <input class="form-control" list="mejoras" id="noConformidadAccion" placeholder="Accion">
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <!--Numero de RAC-->
+                                        <input class="form-control" list="mejoras" id="noConformidadNumRAC" placeholder="Numero de RAC">
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        Estado
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <!--Personal que verifica-->
+                                        <select class="form-select" id="noConformidadIdVerifica">
+                                            <option value="" selected disabled>Seleccione al personal que verifica</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <!--Personal que libera-->
+                                        <select class="form-select" id="noConformidadIdLibera">
+                                            <option value="" selected disabled>Seleccione al personal que libera</option>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -929,6 +1056,7 @@ require_once './../../server/php/permisos.php';
     </div>
 
     <script type="module" src="./../../js/seleccionar-proceso.js"></script>
+    <script type="module" src="./../../js/nueva-auditoria.js"></script>
 
     <!-- <script type="module" src="./../../js/nuevo-proceso.js"></script>
     <script type="module" src="./../../js/auditoria-nueva.js"></script>
