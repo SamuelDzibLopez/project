@@ -33,6 +33,21 @@ const $btnConclusiones = document.getElementById("btnConclusiones");
 //14. Boton de actividad
 const $btnAgregarActividad = document.getElementById("btnAgregarActividad");
 
+//15. data-info a modificar
+var objetoDataInfo;
+
+//16. Modal de modificar oportunidad
+const modalOportunidad = document.getElementById("modalModificarOportunidadFondo");
+
+//17. Modal de modificar comentario
+const modalComentario = document.getElementById("modalModificarComentarioFondo");
+
+//17. Modal de modificar NC
+const modalNC = document.getElementById("modalModificarNCFondo");
+
+//17. Modal de modificar conclusion
+const modalConclusion = document.getElementById("modalModificarConclusionFondo");
+
 //C. Funcionamiento de pagina
 
 //1. Llenar selects de usuarios
@@ -180,8 +195,7 @@ $btnAgregarActividad.addEventListener("click", () => {
   agregarActividadATabla(dataActividad);
 });
 
-
-//Submit de creacion de auditoria
+//14. Submit de creacion de auditoria
 $formAuditoria.addEventListener("submit", async (e) => {
   console.log("Creando auditoría");
 
@@ -267,6 +281,70 @@ $formAuditoria.addEventListener("submit", async (e) => {
     alert(result.message);
   }
 });
+
+//15. Clicks en modificar
+
+// Delegación de eventos más robusta
+document.body.addEventListener("click", (e) => {
+  // captura el botón real (o elemento con clase .btn) aunque el click fuera en un hijo
+  const boton = e.target.closest('button, [role="button"], .btn');
+  if (!boton) return; // no es un botón relevante
+
+  // Helper para leer/parsear data-info desde la fila (si existe)
+  const obtenerDataInfoDesdeBoton = (btn) => {
+    const fila = btn.closest("tr");
+    if (!fila) return null;
+    const raw = fila.getAttribute("data-info") ?? fila.dataset.info;
+    if (!raw) return null;
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      // intento sencillo de decodificar entidades HTML como &quot;
+      const decoded = String(raw).replace(/&quot;/g, '"').replace(/&amp;/g, "&");
+      try { return JSON.parse(decoded); }
+      catch (err2) {
+        console.error("No se pudo parsear data-info:", raw, err2);
+        return null;
+      }
+    }
+  };
+
+  // ahora comprobamos el botón real usando matches (no e.target)
+  if (boton.matches(".btn-modificar-actividad")) {
+    const obj = obtenerDataInfoDesdeBoton(boton);
+    console.log("Click en actividad", obj);
+    // TODO: abrir modal / llenar formulario con obj
+  } else if (boton.matches(".btn-modificar-oportunidad")) {
+    const obj = obtenerDataInfoDesdeBoton(boton);
+    console.log("Click en oportunidad", obj);
+    if (modalOportunidad) modalOportunidad.style.display = "flex";
+  } else if (boton.matches(".btn-modificar-comentario")) {
+    const obj = obtenerDataInfoDesdeBoton(boton);
+    console.log("Click en comentario", obj);
+    if (modalComentario) modalComentario.style.display = "flex";
+  } else if (boton.matches(".btn-modificar-nc")) {
+    const obj = obtenerDataInfoDesdeBoton(boton);
+    console.log("Click en no conformidad", obj);
+    if (modalNC) modalNC.style.display = "flex";
+  } else if (boton.matches(".btn-modificar-conclusion")) {
+    const obj = obtenerDataInfoDesdeBoton(boton);
+    console.log("Click en conclusión", obj);
+    if (modalConclusion) modalConclusion.style.display = "flex";
+  } else if (boton.matches(".btn-cerrar-modalOportunidad")) {
+    console.log("Click en cerrar modal oportunidad");
+    if (modalOportunidad) modalOportunidad.style.display = "none";
+  } else if (boton.matches(".btn-cerrar-modalComentario")) {
+    console.log("Click en cerrar modal comentario");
+    if (modalComentario) modalComentario.style.display = "none";
+  } else if (boton.matches(".btn-cerrar-modalNC")) {
+    console.log("Click en cerrar modal no conformidad");
+    if (modalNC) modalNC.style.display = "none";
+  } else if (boton.matches(".btn-cerrar-modalConclusion")) {
+    console.log("Click en cerrar modal conclusion");
+    if (modalConclusion) modalConclusion.style.display = "none";
+  }
+});
+
 
 //D. Funciones
 
@@ -417,7 +495,7 @@ function agregaraTabla(idInput, idTable, atributo, idAtributo) {
 
   const btnModificar = document.createElement("button");
   btnModificar.type = "button";
-  btnModificar.className = "btn btn-modificar btn-tables escalado";
+  btnModificar.className = `btn btn-modificar btn-modificar-${atributo} btn-tables escalado`;
   btnModificar.textContent = "Modificar";
 
   const btnEliminar = document.createElement("button");
@@ -444,7 +522,6 @@ function agregaraTabla(idInput, idTable, atributo, idAtributo) {
   // Limpiar el input
   input.value = "";
 }
-
 // Función para agregar una actividad a la tabla
 function agregarActividadATabla(dataActividad, idTable = "tabla-actividades") {
   const { horarioInicial, horarioFinal, proceso, actividad, requisito, participantes, contactados, area } = dataActividad;
@@ -483,7 +560,7 @@ function agregarActividadATabla(dataActividad, idTable = "tabla-actividades") {
 
   const btnModificar = document.createElement("button");
   btnModificar.type = "button";
-  btnModificar.className = "btn btn-modificar btn-tables escalado";
+  btnModificar.className = "btn btn-modificar btn-modificar-actividad btn-tables escalado";
   btnModificar.textContent = "Modificar";
 
   const btnEliminar = document.createElement("button");
@@ -494,13 +571,6 @@ function agregarActividadATabla(dataActividad, idTable = "tabla-actividades") {
   // Evento para eliminar
   btnEliminar.addEventListener("click", () => {
     nuevaFila.remove();
-  });
-
-  // (Opcional) Evento para modificar: puedes cargar los datos al formulario
-  btnModificar.addEventListener("click", () => {
-    const info = JSON.parse(nuevaFila.getAttribute("data-info"));
-    console.log("Modificar actividad:", info);
-    // Aquí puedes llenar tus inputs con info.*
   });
 
   tdOpciones.appendChild(btnModificar);
@@ -549,7 +619,7 @@ function agregarNoConformidadATabla(dataNoConformidad, idTable = "tabla-noconfor
 
   const btnModificar = document.createElement("button");
   btnModificar.type = "button";
-  btnModificar.className = "btn btn-modificar escalado";
+  btnModificar.className = "btn btn-modificar btn-modificar-nc escalado";
   btnModificar.textContent = "Modificar";
 
   const btnEliminar = document.createElement("button");
@@ -560,13 +630,6 @@ function agregarNoConformidadATabla(dataNoConformidad, idTable = "tabla-noconfor
   // Evento para eliminar
   btnEliminar.addEventListener("click", () => {
     nuevaFila.remove();
-  });
-
-  // Evento para modificar: cargar los datos en el formulario
-  btnModificar.addEventListener("click", () => {
-    const info = JSON.parse(nuevaFila.getAttribute("data-info"));
-    console.log("Modificar no conformidad:", info);
-    // Aquí llenas los inputs con info.descripcion, info.requisito, etc.
   });
 
   tdOpciones.appendChild(btnModificar);

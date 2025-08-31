@@ -928,151 +928,90 @@ require_once './../../server/php/permisos.php';
         </div>
     </div>
 
-    <div id="modalModificarPNCFondo" class="modalModificarActividadFondo"
-        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: none; align-items: center; justify-content: center; z-index: 9999;">
-        <div id="modalModificarActividad"
-            style="background-color: #fff; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: 0 0 15px rgba(0,0,0,0.3);">
-            <h3 style="margin-top: 0;">Modificar Producto No Conforme</h3>
-            <div class="div-datos-mis-datos inputs-responsive">
-                <div class="div-datos-mis-datos inputs-responsive">
-                    <!--Folio-->
-                    <div class="mb-3 inputs-responsive">
-                        <label for="modificar-pnc-folio" class="form-label inputs-responsive">Folio:</label>
-                        <input type="text" class="form-control inputs-responsive" id="modificar-pnc-folio">
-                    </div>
-                    <!--Fecha de registro-->
-                    <div class="mb-3 inputs-responsive">
-                        <label for="modificar-pnc-fecha" class="form-label inputs-responsive">Fecha de
-                            registro</label>
-                        <input type="date" class="form-control inputs-responsive" id="modificar-pnc-fecha">
-                    </div>
-                    <!--Especificación-->
-                    <div class="form-floating inputs-responsive">
-                        <textarea class="form-control inputs-responsive" placeholder="Especificación inclumplida"
-                            id="modificar-pnc-especificacion" style="height: 100px"></textarea>
-                        <label for="modificar-pnc-especificacion">Especificación inclumplida</label>
-                    </div>
-                    <!--Acción-->
-                    <div class="form-floating inputs-responsive">
-                        <textarea class="form-control inputs-responsive" placeholder="Acción implantada"
-                            id="modificar-pnc-accion" style="height: 100px"></textarea>
-                        <label for="modificar-pnc-accion">Acción implantada</label>
-                    </div>
-                    <!--Numero de RAC-->
-                    <div class="mb-3 inputs-responsive">
-                        <label for="modificar-pnc-rac" class="form-label inputs-responsive">Número de RAC:</label>
-                        <input type="text" class="form-control inputs-responsive" id="modificar-pnc-rac">
-                    </div>
-
-                    <!--Checks-->
-                    <label for="" class="form-label inputs-responsive">Eliminar PNC:</label>
-                    <div class="div-mis-datos">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" id="CheckYesModificar" name="checkModificar"
-                                value="Si">
-                            <label class="form-check-label" for="CheckYesModificar">
-                                Si
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" id="CheckNoModificar" name="checkModificar"
-                                value="No" checked>
-                            <label class="form-check-label" for="CheckNoModificar">
-                                No
-                            </label>
-                        </div>
-                    </div>
-
-                    <!--Personal que verifica-->
-                    <div class="mb-3">
-                        <label for="modificar-pnc-verifica" class="form-label">Personal que verifica:</label>
-                        <select class="form-select" id="modificar-pnc-verifica" required>
-                            <option value="" selected disabled>Seleccione al personal que verifica
-                            </option>
-                        </select>
-                    </div>
-                    <!--Personal que libera-->
-                    <div class="mb-3">
-                        <label for="modificar-pnc-libera" class="form-label">Personal que libera:</label>
-                        <select class="form-select" id="modificar-pnc-libera" required>
-                            <option value="" selected disabled>Seleccione al personal que libera
-                            </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div style="text-align: right; margin-top: 15px;">
-                <button type="button" id="btnCancelarModificarPNC" class="btn btn-secondary">Cancelar</button>
-                <button type="button" id="btnGuardarModificarPNC" class="btn btn-primary">Guardar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Modificar Corrección -->
-    <div id="modalModificarCorreccionFondo" class="modalModificarActividadFondo"
-        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); align-items: center; justify-content: center; z-index: 9999;">
-        <div id="ac-modificar-modal-correccion"
-            style="background-color: #fff; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: 0 0 15px rgba(0,0,0,0.3);">
-            <h3 style="margin-top: 0;">Modificar Corrección</h3>
-            <div class="div-datos-mis-datos inputs-responsive">
-                <!-- Corrección -->
-                <div class="form-floating inputs-responsive">
-                    <textarea class="form-control inputs-responsive" placeholder="Corrección"
-                        id="ac-modificar-correccion-textarea" style="height: 100px"></textarea>
-                    <label for="ac-modificar-correccion-textarea">Corrección</label>
-                </div>
-                <!-- Responsable -->
-                <div class="mb-3">
-                    <label for="ac-modificar-responsable-select" class="form-label">Responsable:</label>
-                    <select class="form-select" id="ac-modificar-responsable-select">
-                        <option value="" selected>Seleccione usuario responsable</option>
-                    </select>
-                </div>
-                <!-- Fecha de registro -->
-                <div class="mb-3 inputs-responsive">
-                    <label for="ac-modificar-fecha-registro" class="form-label inputs-responsive">Fecha de registro</label>
-                    <input type="date" class="form-control inputs-responsive" id="ac-modificar-fecha-registro">
-                </div>
-            </div>
-
-            <div style="text-align: right; margin-top: 15px;">
-                <button type="button" id="ac-modificar-btn-cancelar-correccion" class="btn btn-secondary">Cancelar</button>
-                <button type="button" id="ac-modificar-btn-guardar-correccion" class="btn btn-primary">Guardar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Modificar Acción -->
-    <div id="modalModificarAccionFondo" class="modalModificarActividadFondo"
+    <!-- Modal Modificar Oportunidad -->
+    <div id="modalModificarOportunidadFondo" class="modalModificarActividadFondo"
         style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); align-items: center; justify-content: center; z-index: 9999;">
         <div id="ac-modificar-modal-accion"
             style="background-color: #fff; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: 0 0 15px rgba(0,0,0,0.3);">
-            <h3 style="margin-top: 0;">Modificar Acción</h3>
+            <h3 style="margin-top: 0;">Modificar oportunidad de mejora</h3>
             <div class="div-datos-mis-datos inputs-responsive">
                 <!-- Acción -->
                 <div class="form-floating inputs-responsive">
-                    <textarea class="form-control inputs-responsive" placeholder="Acción"
+                    <textarea class="form-control inputs-responsive" placeholder="Oportunidad de mejora"
                         id="ac-modificar-accion-textarea" style="height: 100px"></textarea>
-                    <label for="ac-modificar-accion-textarea">Acción</label>
-                </div>
-                <!-- Responsable -->
-                <div class="mb-3">
-                    <label for="ac-modificar-responsable-accion" class="form-label">Responsable:</label>
-                    <select class="form-select" id="ac-modificar-responsable-accion">
-                        <option value="" selected>Seleccione usuario responsable</option>
-                    </select>
-                </div>
-                <!-- Fecha de registro -->
-                <div class="mb-3 inputs-responsive">
-                    <label for="ac-modificar-fecha-accion" class="form-label inputs-responsive">Fecha de registro</label>
-                    <input type="date" class="form-control inputs-responsive" id="ac-modificar-fecha-accion">
+                    <label for="ac-modificar-accion-textarea">Oportunidad de mejora</label>
                 </div>
             </div>
 
             <div style="text-align: right; margin-top: 15px;">
-                <button type="button" id="ac-modificar-btn-cancelar-accion" class="btn btn-secondary">Cancelar</button>
-                <button type="button" id="ac-modificar-btn-guardar-accion" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-secondary btn-cerrar-modalOportunidad">Cancelar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Modificar Comentario -->
+    <div id="modalModificarComentarioFondo" class="modalModificarActividadFondo"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); align-items: center; justify-content: center; z-index: 9999;">
+        <div id="ac-modificar-modal-accion"
+            style="background-color: #fff; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: 0 0 15px rgba(0,0,0,0.3);">
+            <h3 style="margin-top: 0;">Modificar Comentario</h3>
+            <div class="div-datos-mis-datos inputs-responsive">
+                <!-- Acción -->
+                <div class="form-floating inputs-responsive">
+                    <textarea class="form-control inputs-responsive" placeholder="Comentario"
+                        id="ac-modificar-accion-textarea" style="height: 100px"></textarea>
+                    <label for="ac-modificar-accion-textarea">Comentario</label>
+                </div>
+            </div>
+
+            <div style="text-align: right; margin-top: 15px;">
+                <button type="button" class="btn btn-secondary btn-cerrar-modalComentario">Cancelar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Modificar NC -->
+    <div id="modalModificarNCFondo" class="modalModificarActividadFondo"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); align-items: center; justify-content: center; z-index: 9999;">
+        <div id="ac-modificar-modal-accion"
+            style="background-color: #fff; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: 0 0 15px rgba(0,0,0,0.3);">
+            <h3 style="margin-top: 0;">Modificar No Conformidad</h3>
+            <div class="div-datos-mis-datos inputs-responsive">
+                <!-- Acción -->
+                <div class="form-floating inputs-responsive">
+                    <textarea class="form-control inputs-responsive" placeholder="No Conformidad"
+                        id="ac-modificar-accion-textarea" style="height: 100px"></textarea>
+                    <label for="ac-modificar-accion-textarea">No Conformidad</label>
+                </div>
+            </div>
+
+            <div style="text-align: right; margin-top: 15px;">
+                <button type="button" class="btn btn-secondary btn-cerrar-modalNC">Cancelar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Modificar Conclusion -->
+    <div id="modalModificarConclusionFondo" class="modalModificarActividadFondo"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); align-items: center; justify-content: center; z-index: 9999;">
+        <div id="ac-modificar-modal-accion"
+            style="background-color: #fff; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: 0 0 15px rgba(0,0,0,0.3);">
+            <h3 style="margin-top: 0;">Modificar Conclusión</h3>
+            <div class="div-datos-mis-datos inputs-responsive">
+                <!-- Acción -->
+                <div class="form-floating inputs-responsive">
+                    <textarea class="form-control inputs-responsive" placeholder="Conclusión"
+                        id="ac-modificar-accion-textarea" style="height: 100px"></textarea>
+                    <label for="ac-modificar-accion-textarea">Conclusión</label>
+                </div>
+            </div>
+
+            <div style="text-align: right; margin-top: 15px;">
+                <button type="button" class="btn btn-secondary btn-cerrar-modalConclusion">Cancelar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
             </div>
         </div>
     </div>
