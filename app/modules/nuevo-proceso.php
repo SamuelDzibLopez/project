@@ -938,14 +938,14 @@ require_once './../../server/php/permisos.php';
                 <!-- Acción -->
                 <div class="form-floating inputs-responsive">
                     <textarea class="form-control inputs-responsive" placeholder="Oportunidad de mejora"
-                        id="ac-modificar-accion-textarea" style="height: 100px"></textarea>
-                    <label for="ac-modificar-accion-textarea">Oportunidad de mejora</label>
+                        id="input-modificar-oportunidad-textarea" style="height: 100px"></textarea>
+                    <label for="ac-modificar-oportunidad-textarea">Oportunidad de mejora</label>
                 </div>
             </div>
 
             <div style="text-align: right; margin-top: 15px;">
                 <button type="button" class="btn btn-secondary btn-cerrar-modalOportunidad">Cancelar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-primary" id="btnModificarOportunidad">Guardar</button>
             </div>
         </div>
     </div>
@@ -960,14 +960,36 @@ require_once './../../server/php/permisos.php';
                 <!-- Acción -->
                 <div class="form-floating inputs-responsive">
                     <textarea class="form-control inputs-responsive" placeholder="Comentario"
-                        id="ac-modificar-accion-textarea" style="height: 100px"></textarea>
-                    <label for="ac-modificar-accion-textarea">Comentario</label>
+                        id="input-modificar-comentario-textarea" style="height: 100px"></textarea>
+                    <label for="ac-modificar-comentario-textarea">Comentario</label>
                 </div>
             </div>
 
             <div style="text-align: right; margin-top: 15px;">
                 <button type="button" class="btn btn-secondary btn-cerrar-modalComentario">Cancelar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-primary" id="btnModificarComentario">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Modificar Conclusion -->
+    <div id="modalModificarConclusionFondo" class="modalModificarActividadFondo"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); align-items: center; justify-content: center; z-index: 9999;">
+        <div id="ac-modificar-modal-accion"
+            style="background-color: #fff; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: 0 0 15px rgba(0,0,0,0.3);">
+            <h3 style="margin-top: 0;">Modificar Conclusión</h3>
+            <div class="div-datos-mis-datos inputs-responsive">
+                <!-- Acción -->
+                <div class="form-floating inputs-responsive">
+                    <textarea class="form-control inputs-responsive" placeholder="Conclusión"
+                        id="input-modificar-conclusion-textarea" style="height: 100px"></textarea>
+                    <label for="input-modificar-conclusion-textarea">Conclusión</label>
+                </div>
+            </div>
+
+            <div style="text-align: right; margin-top: 15px;">
+                <button type="button" class="btn btn-secondary btn-cerrar-modalConclusion">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnModificarConclusion">Guardar</button>
             </div>
         </div>
     </div>
@@ -989,28 +1011,6 @@ require_once './../../server/php/permisos.php';
 
             <div style="text-align: right; margin-top: 15px;">
                 <button type="button" class="btn btn-secondary btn-cerrar-modalNC">Cancelar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Modificar Conclusion -->
-    <div id="modalModificarConclusionFondo" class="modalModificarActividadFondo"
-        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); align-items: center; justify-content: center; z-index: 9999;">
-        <div id="ac-modificar-modal-accion"
-            style="background-color: #fff; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: 0 0 15px rgba(0,0,0,0.3);">
-            <h3 style="margin-top: 0;">Modificar Conclusión</h3>
-            <div class="div-datos-mis-datos inputs-responsive">
-                <!-- Acción -->
-                <div class="form-floating inputs-responsive">
-                    <textarea class="form-control inputs-responsive" placeholder="Conclusión"
-                        id="ac-modificar-accion-textarea" style="height: 100px"></textarea>
-                    <label for="ac-modificar-accion-textarea">Conclusión</label>
-                </div>
-            </div>
-
-            <div style="text-align: right; margin-top: 15px;">
-                <button type="button" class="btn btn-secondary btn-cerrar-modalConclusion">Cancelar</button>
                 <button type="button" class="btn btn-primary">Guardar</button>
             </div>
         </div>

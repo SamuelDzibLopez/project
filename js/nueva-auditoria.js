@@ -33,8 +33,8 @@ const $btnConclusiones = document.getElementById("btnConclusiones");
 //14. Boton de actividad
 const $btnAgregarActividad = document.getElementById("btnAgregarActividad");
 
-//15. data-info a modificar
-var objetoDataInfo;
+//15. elemento de data-info a modificar
+var elementoDataInfo;
 
 //16. Modal de modificar oportunidad
 const modalOportunidad = document.getElementById("modalModificarOportunidadFondo");
@@ -47,6 +47,15 @@ const modalNC = document.getElementById("modalModificarNCFondo");
 
 //17. Modal de modificar conclusion
 const modalConclusion = document.getElementById("modalModificarConclusionFondo");
+
+//18. Boton de modal de modificar oportunidad
+const $btnModificarOportunidad = document.getElementById("btnModificarOportunidad");
+
+//19. Boton de modal de modificar comentario
+const $btnModificarComentario = document.getElementById("btnModificarComentario");
+
+//20. Boton de modal de modificar conclusion
+const $btnModificarConclusion = document.getElementById("btnModificarConclusion");
 
 //C. Funcionamiento de pagina
 
@@ -283,67 +292,133 @@ $formAuditoria.addEventListener("submit", async (e) => {
 });
 
 //15. Clicks en modificar
-
-// Delegación de eventos más robusta
 document.body.addEventListener("click", (e) => {
-  // captura el botón real (o elemento con clase .btn) aunque el click fuera en un hijo
+
+  // Busca el botón "real" aunque se haga click en un hijo (ej: un <i> o <span> dentro del botón)
+  // closest() sube en el DOM hasta encontrar un <button>, [role="button"] o algo con clase .btn
   const boton = e.target.closest('button, [role="button"], .btn');
-  if (!boton) return; // no es un botón relevante
 
-  // Helper para leer/parsear data-info desde la fila (si existe)
-  const obtenerDataInfoDesdeBoton = (btn) => {
-    const fila = btn.closest("tr");
-    if (!fila) return null;
-    const raw = fila.getAttribute("data-info") ?? fila.dataset.info;
-    if (!raw) return null;
-    try {
-      return JSON.parse(raw);
-    } catch (err) {
-      // intento sencillo de decodificar entidades HTML como &quot;
-      const decoded = String(raw).replace(/&quot;/g, '"').replace(/&amp;/g, "&");
-      try { return JSON.parse(decoded); }
-      catch (err2) {
-        console.error("No se pudo parsear data-info:", raw, err2);
-        return null;
-      }
-    }
-  };
+  // Si no se encontró un botón relevante, termina la función
+  if (!boton) return;
 
-  // ahora comprobamos el botón real usando matches (no e.target)
+  // A partir de aquí sabemos que "boton" es el elemento correcto sobre el que se hizo click
+  // Se usan condicionales para distinguir qué tipo de botón es, según sus clases
+
+  // -------------------------------
+  // Caso: botón para modificar una actividad
   if (boton.matches(".btn-modificar-actividad")) {
+    // Obtenemos el objeto con la información de la fila (desde data-info)
     const obj = obtenerDataInfoDesdeBoton(boton);
-    console.log("Click en actividad", obj);
-    // TODO: abrir modal / llenar formulario con obj
+
+    // Obtenemos directamente la fila <tr> donde está el botón
+    elementoDataInfo = obtenerFilaDesdeBoton(boton);
+
+    // Solo debug: mostramos en consola los datos
+    console.log(obj);
+    console.log(elementoDataInfo);
+
+    // TODO: aquí podrías abrir un modal o llenar un formulario con los datos del objeto
+
+  // -------------------------------
+  // Caso: botón para modificar una oportunidad
   } else if (boton.matches(".btn-modificar-oportunidad")) {
     const obj = obtenerDataInfoDesdeBoton(boton);
-    console.log("Click en oportunidad", obj);
+    elementoDataInfo = obtenerFilaDesdeBoton(boton);
+    console.log(obj);
+    console.log(elementoDataInfo);
+
+    // Obtiene el <textarea> dentro del modal correspondiente
+    const $inputModificarConclusionTextarea = document.getElementById(
+      "input-modificar-oportunidad-textarea"
+    );
+
+    // Inserta el valor de "oportunidad" en el textarea
+    $inputModificarConclusionTextarea.value = obj.oportunidad;
+
+    // Muestra el modal (flex para centrar)
     if (modalOportunidad) modalOportunidad.style.display = "flex";
+
+  // -------------------------------
+  // Caso: botón para modificar un comentario
   } else if (boton.matches(".btn-modificar-comentario")) {
     const obj = obtenerDataInfoDesdeBoton(boton);
-    console.log("Click en comentario", obj);
+    elementoDataInfo = obtenerFilaDesdeBoton(boton);
+    console.log(obj);
+    console.log(elementoDataInfo);
+
+    const $inputModificarConclusionTextarea = document.getElementById(
+      "input-modificar-comentario-textarea"
+    );
+
+    // Inserta el valor de "comentario" en el textarea
+    $inputModificarConclusionTextarea.value = obj.comentario;
+
+    // Abre el modal
     if (modalComentario) modalComentario.style.display = "flex";
+
+  // -------------------------------
+  // Caso: botón para modificar una No Conformidad (NC)
   } else if (boton.matches(".btn-modificar-nc")) {
     const obj = obtenerDataInfoDesdeBoton(boton);
-    console.log("Click en no conformidad", obj);
+    elementoDataInfo = obtenerFilaDesdeBoton(boton);
+    console.log(obj);
+    console.log(elementoDataInfo);
+
+    // Abre el modal
     if (modalNC) modalNC.style.display = "flex";
+
+  // -------------------------------
+  // Caso: botón para modificar una conclusión
   } else if (boton.matches(".btn-modificar-conclusion")) {
     const obj = obtenerDataInfoDesdeBoton(boton);
-    console.log("Click en conclusión", obj);
+    elementoDataInfo = obtenerFilaDesdeBoton(boton);
+    console.log(obj);
+    console.log(elementoDataInfo);
+
+    // Obtiene el textarea dentro del modal
+    const $inputModificarConclusionTextarea = document.getElementById(
+      "input-modificar-conclusion-textarea"
+    );
+
+    // Inserta el valor de "conclusion"
+    $inputModificarConclusionTextarea.value = obj.conclusion;
+
+    // Muestra el modal
     if (modalConclusion) modalConclusion.style.display = "flex";
+
+  // -------------------------------
+  // Caso: botón para cerrar modal de Oportunidad
   } else if (boton.matches(".btn-cerrar-modalOportunidad")) {
-    console.log("Click en cerrar modal oportunidad");
     if (modalOportunidad) modalOportunidad.style.display = "none";
+
+  // -------------------------------
+  // Caso: botón para cerrar modal de Comentario
   } else if (boton.matches(".btn-cerrar-modalComentario")) {
-    console.log("Click en cerrar modal comentario");
     if (modalComentario) modalComentario.style.display = "none";
+
+  // -------------------------------
+  // Caso: botón para cerrar modal de No Conformidad
   } else if (boton.matches(".btn-cerrar-modalNC")) {
-    console.log("Click en cerrar modal no conformidad");
     if (modalNC) modalNC.style.display = "none";
+
+  // -------------------------------
+  // Caso: botón para cerrar modal de Conclusión
   } else if (boton.matches(".btn-cerrar-modalConclusion")) {
-    console.log("Click en cerrar modal conclusion");
     if (modalConclusion) modalConclusion.style.display = "none";
   }
 });
+
+
+$btnModificarConclusion.addEventListener("click", (e) => {
+  console.log("Modificando conclusion");
+
+  if (modalConclusion) modalConclusion.style.display = "none";
+
+  actualizarConclusionEnFila(
+    elementoDataInfo,
+    "input-modificar-conclusion-textarea"
+  );
+})
 
 
 //D. Funciones
@@ -661,6 +736,76 @@ function obtenerInfoTarjetas($divTarjetas) {
   // Retornar el array de valores
   return valores;
 }
+
+// Funcion para leer/parsear data-info desde la fila (si existe) a modificar
+function obtenerDataInfoDesdeBoton(btn) {
+  const fila = btn.closest("tr");
+  if (!fila) return null;
+  const raw = fila.getAttribute("data-info") ?? fila.dataset.info;
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch (err) {
+    // intento sencillo de decodificar entidades HTML como &quot;
+    const decoded = String(raw)
+      .replace(/&quot;/g, '"')
+      .replace(/&amp;/g, "&");
+    try {
+      return JSON.parse(decoded);
+    } catch (err2) {
+      console.error("No se pudo parsear data-info:", raw, err2);
+      return null;
+    }
+  }
+}
+
+// Funcion para obtener elemento de fila a modificar
+function obtenerFilaDesdeBoton(btn) {
+  const fila = btn.closest("tr");
+  return fila ?? null;
+}
+
+// Función para modificar conclusión
+function actualizarConclusionEnFila(fila, idTextarea) {
+  if (!fila) return;
+
+  // Obtener el valor del textarea
+  const input = document.getElementById(idTextarea);
+  if (!input) {
+    console.error("No se encontró el textarea con id:", idTextarea);
+    return;
+  }
+  const nuevaConclusion = input.value;
+
+  // Leer el data-info de la fila
+  const raw = fila.getAttribute("data-info") ?? fila.dataset.info;
+  if (!raw) return;
+
+  try {
+    const obj = JSON.parse(raw);
+
+    // Actualizar los datos en el objeto
+    obj.conclusion = nuevaConclusion;
+    if (obj.idConclusion !== undefined) {
+      obj.idConclusion = obj.idConclusion; // mantener el mismo id
+    }
+
+    // Guardar de nuevo en la fila (atributo data-info)
+    fila.setAttribute("data-info", JSON.stringify(obj));
+
+    // 👇 Actualizar también el HTML (primer <td>)
+    const primeraCelda = fila.querySelector("td");
+    if (primeraCelda) {
+      primeraCelda.textContent = nuevaConclusion;
+    }
+  } catch (err) {
+    console.error("No se pudo actualizar la conclusión:", err);
+  }
+}
+
+
+
+
 
 
 
