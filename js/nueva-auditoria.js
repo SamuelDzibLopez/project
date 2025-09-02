@@ -264,64 +264,53 @@ $formAuditoria.addEventListener("submit", async (e) => {
 
   const data = {
     tipoProceso: "Auditoría",
-    folioProceso: "2025-001",
+    folioProceso: document.getElementById("numero").value,
     estadoProceso: 1,
     auditoriaData: {
-      numAuditoria: 1001,
-      proceso: "Proceso de Auditoría 2025",
-      fecha: "2025-07-01",
-      documentosReferencia: "Documento X, Documento Y",
-      objetivo: "Verificar cumplimiento",
-      alcance: "Área administrativa",
-      fechaEmision: "2025-07-02",
-      ciudadInicioApertura: "Mérida",
-      fechaInicioApertura: "2025-07-01 09:00:00",
-      lugarInicioApertura: "Sala 101",
-      fechaFinalApertura: "2025-07-01 12:00:00",
-      ciudadInicioCierre: "Mérida",
-      fechaInicioCierre: "2025-07-02 09:00:00",
-      lugarInicioCierre: "Sala 102",
-      fechaFinalCierre: "2025-07-02 12:00:00",
-      fechaEntregaEvidencia: "2025-07-03",
-      idElabora: 1,
-      idValida: 2,
-      idCoordinador: 3,
-      idRecibe: 4,
+      numAuditoria: document.getElementById("numero").value,
+      proceso: document.getElementById("proceso").value,
+      fecha: document.getElementById("fecha").value,
+      documentosReferencia: document.getElementById("documentos").value,
+      objetivo: document.getElementById("objetivo").value,
+      alcance: document.getElementById("alcance").value,
+      fechaEmision: document.getElementById("fechaEmision").value,
+
+      ciudadInicioApertura: document.getElementById("cuidadApertura").value,
+      fechaInicioApertura: document.getElementById("inicioApertura").value,
+      lugarInicioApertura: document.getElementById("areaApertura").value,
+      fechaFinalApertura: document.getElementById("finApertura").value,
+
+      ciudadInicioCierre: document.getElementById("cuidadCierre").value,
+      fechaInicioCierre: document.getElementById("inicioCierre").value,
+      lugarInicioCierre: document.getElementById("areaCierre").value,
+      fechaFinalCierre: document.getElementById("finCierre").value,
+
+      fechaEntregaEvidencia: document.getElementById("entregaEvidencia").value,
+
+      idElabora: document.getElementById("idElabora").value,
+      idValida: document.getElementById("idValida").value,
+      idCoordinador: document.getElementById("idCoordinador").value,
+      idRecibe: document.getElementById("idRecibe").value,
     },
-    usuariosProceso: [1, 2, 3],
-    actividades: [
-      {
-        horarioInicial: "2025-07-01 09:00:00",
-        horarioFinal: "2025-07-01 12:00:00",
-        proceso: "Académico",
-        actividad: "Actividad 1",
-        requisito: "1.1",
-        area: "Sala 1",
-        participantes: [1, 2],
-        contactados: [1, 2],
-      },
-    ],
-    institutos: [1, 2],
-    personalContactado: [1, 2, 3, 4],
-    auditores: [1, 2, 3, 4],
-    auditoresLideres: [1, 2],
-    oportunidades: [{ oportunidad: "Mejorar proceso de documentación 1" }],
-    comentarios: [{ comentario: "Comentario inicial sobre auditoría 1" }],
-    conclusiones: [{ conclusion: "Conclusión de auditoría satisfactoria 1" }],
-    noConformidades: [
-      {
-        descripcion: "Falta de control en documentación 1",
-        requisito: "ISO 9001:2015",
-        folio: "2025-001/01",
-        fecha: "2025-07-02",
-        accion: "",
-        numRAC: "RAC-001/01",
-        estado: 1,
-        idVerifica: 2,
-        idLibera: 3,
-      },
-    ],
+    usuariosProceso: obtenerInfoTarjetas(
+      document.getElementById("divUsuarios")
+    ),
+    actividades: obtenerDataInfoDeTabla("tabla-actividades"),
+    institutos: obtenerChecks("institutoNorte", "institutoPoniente"),
+    personalContactado: obtenerInfoTarjetas(
+      document.getElementById("divParticipantes")
+    ),
+    auditores: obtenerInfoTarjetas(document.getElementById("divAuditores")),
+    auditoresLideres: obtenerInfoTarjetas(
+      document.getElementById("divAuditoresLideres")
+    ),
+    oportunidades: obtenerDataInfoDeTabla("tabla-mejoras"),
+    comentarios: obtenerDataInfoDeTabla("tabla-comentarios"),
+    conclusiones: obtenerDataInfoDeTabla("tabla-conclusiones"),
+    noConformidades: obtenerDataInfoDeTabla("tabla-noconformidades"),
   };
+
+  console.log(data);
 
   try {
     const response = await fetch(url_auditorias_create_auditoria, {
@@ -1249,6 +1238,45 @@ function agregarTarjetasDesdeIdsContactos(idsContactos, contactos, $DivTarjet) {
     // Insertar en el div
     $DivTarjet.appendChild($Tarjeta);
   });
+}
+
+// Funcion para obtener institutos
+function obtenerChecks(idCheck1, idCheck2) {
+  const resultado = [];
+
+  const check1 = document.getElementById(idCheck1);
+  const check2 = document.getElementById(idCheck2);
+
+  if (check1 && check1.checked) {
+    resultado.push(1);
+  }
+
+  if (check2 && check2.checked) {
+    resultado.push(2);
+  }
+
+  return resultado;
+}
+
+// Funcion para obtener los data-info de una tabla
+function obtenerDataInfoDeTabla(idTabla) {
+  const tabla = document.getElementById(idTabla);
+  const dataArray = [];
+
+  if (!tabla) return dataArray; // si no existe la tabla, regresa []
+
+  const filas = tabla.querySelectorAll("tbody tr[data-info]");
+
+  filas.forEach((fila) => {
+    try {
+      const info = JSON.parse(fila.getAttribute("data-info"));
+      dataArray.push(info);
+    } catch (error) {
+      console.error("Error al parsear data-info:", error);
+    }
+  });
+
+  return dataArray;
 }
 
 
