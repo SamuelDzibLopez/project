@@ -6,9 +6,9 @@ import { url_auditorias_create_auditoria, url_usuarios_obtener_id_usuarios, url_
 //1. Formulario de auditoria
 const $formAuditoria = document.getElementById("auditoria");
 //2. Array de selects de usuarios
-const idSelectsUsuarios = ["idElabora", "idValida", "idCoordinador", "idRecibe", "auditoresLideres", "auditor", "participantesActividad", "noConformidadIdVerifica", "noConformidadIdLibera", "usuarios"];
+const idSelectsUsuarios = ["idElabora", "idValida", "idCoordinador", "idRecibe", "auditoresLideres", "auditor", "participantesActividad", "noConformidadIdVerifica", "noConformidadIdLibera", "usuarios", "noConformidadIdVerificaModificar", "noConformidadIdLiberaModificar", "modificarParticipantesActividad"];
 //3. Array de selects de contactos
-const idSelectsContactos = ["contactosActividad", "participantes"];
+const idSelectsContactos = ["contactosActividad", "participantes", "modificarContactosActividad"];
 //4. Boton de auditores lideres
 const $btnAuditoresLideres = document.getElementById("btnAuditoresLideres");
 //5. Boton de auditores
@@ -17,6 +17,12 @@ const $btnAuditores = document.getElementById("btnAuditores");
 const $btnParticipantesActividad = document.getElementById("btnParticipantesActividad");
 //7. Boton de participantes de actividad
 const $btnContactosActividad = document.getElementById("btnContactosActividad");
+//6. Boton de participantes de actividad
+const $btnModificarParticipantesActividad = document.getElementById("btnModificarParticipantesActividad");
+//7. Boton de participantes de actividad
+const $btnModificarContactosActividad = document.getElementById(
+  "btnModificarContactosActividad"
+);
 //8. Boton de personal contactado
 const $btnParticipantes = document.getElementById("btnParticipantes");
 //9. Boton de usuarios
@@ -48,6 +54,9 @@ const modalNC = document.getElementById("modalModificarNCFondo");
 //17. Modal de modificar conclusion
 const modalConclusion = document.getElementById("modalModificarConclusionFondo");
 
+//17. Modal de modificar actividad
+const modalActividad = document.getElementById("modalModificarActividadFondo");
+
 //18. Boton de modal de modificar oportunidad
 const $btnModificarOportunidad = document.getElementById("btnModificarOportunidad");
 
@@ -57,7 +66,32 @@ const $btnModificarComentario = document.getElementById("btnModificarComentario"
 //20. Boton de modal de modificar conclusion
 const $btnModificarConclusion = document.getElementById("btnModificarConclusion");
 
+//21. Boton de modal de modificar conclusion
+const $btnModificarNC = document.getElementById("btnModificarNC");
+
+//22. Boton de modal de modificar conclusion
+const $btnModificarActividad = document.getElementById("btnGuardarModificarActividad");
+
 //C. Funcionamiento de pagina
+
+//Obtener usuarios
+const respuestaUsuarios = await fetch(url_usuarios_obtener_id_usuarios);
+if (!respuestaUsuarios.ok) {
+  throw new Error(`Error en la petición: ${respuestaUsuarios.status}`);
+}
+
+const dataUsuarios = await respuestaUsuarios.json();
+console.log(dataUsuarios);
+
+// Obtener contactos
+const respuestaContactos = await fetch(url_contactos_obtener_id_contactos);
+if (!respuestaContactos.ok) {
+  throw new Error(`Error en la petición: ${respuestaContactos.status}`);
+}
+
+const dataContactos = await respuestaContactos.json();
+console.log(dataContactos);
+
 
 //1. Llenar selects de usuarios
 await cargarUsuariosEnSelects(idSelectsUsuarios, url_usuarios_obtener_id_usuarios);
@@ -93,6 +127,22 @@ $btnParticipantesActividad.addEventListener("click", () => {
 $btnContactosActividad.addEventListener("click", () => {
   const $contactosActividad = document.getElementById("contactosActividad");
   const $divContactosActividad = document.getElementById("divContactosActividad");
+
+  agregarTarjeta($contactosActividad, $divContactosActividad);
+});
+
+//5. Funcionamiento de agregado de participantes de actividad
+$btnModificarParticipantesActividad.addEventListener("click", () => {
+  const $participantesActividad = document.getElementById("modificarParticipantesActividad");
+  const $divParticipantesActividad = document.getElementById("divModificarParticipantesActividad");
+
+  agregarTarjeta($participantesActividad, $divParticipantesActividad);
+});
+
+//6. Funcionamiento de agregado de contactos de actividad
+$btnModificarContactosActividad.addEventListener("click", () => {
+  const $contactosActividad = document.getElementById("modificarContactosActividad");
+  const $divContactosActividad = document.getElementById("divModificarContactosActividad");
 
   agregarTarjeta($contactosActividad, $divContactosActividad);
 });
@@ -145,6 +195,7 @@ $btnNoconformidades.addEventListener("click", () => {
 
     // Armar objeto con los datos
     const noConformidad = {
+      idNC: "",
         descripcion: descripcion,
         requisito: requisito,
         folio: folio,
@@ -189,6 +240,7 @@ $btnAgregarActividad.addEventListener("click", () => {
 
   // Crear objeto con todos los datos
   const dataActividad = {
+    idActividad: "",
     horarioInicial,
     horarioFinal,
     proceso,
@@ -317,10 +369,24 @@ document.body.addEventListener("click", (e) => {
     console.log(obj);
     console.log(elementoDataInfo);
 
-    // TODO: aquí podrías abrir un modal o llenar un formulario con los datos del objeto
+    if (modalActividad) modalActividad.style.display = "flex";
 
-  // -------------------------------
-  // Caso: botón para modificar una oportunidad
+    document.getElementById("modificarInicioActividad").value =
+      obj.horarioInicial;
+    document.getElementById("modificarFinActividad").value = obj.horarioFinal;
+    document.getElementById("modificarTipoProceso").value = obj.proceso;
+    document.getElementById("modificarActividadTexto").value = obj.actividad;
+    document.getElementById("modificarRequisitoCriterio").value = obj.requisito;
+
+    document.getElementById("modificarAreaSitioActividad").value = obj.area;
+
+
+    agregarTarjetasDesdeIdsUsuarios(obj.participantes, dataUsuarios.data, document.getElementById("divModificarParticipantesActividad"));
+    
+    agregarTarjetasDesdeIdsContactos(obj.contactados, dataContactos.data, document.getElementById("divModificarContactosActividad"));
+
+    // -------------------------------
+    // Caso: botón para modificar una oportunidad
   } else if (boton.matches(".btn-modificar-oportunidad")) {
     const obj = obtenerDataInfoDesdeBoton(boton);
     elementoDataInfo = obtenerFilaDesdeBoton(boton);
@@ -338,8 +404,8 @@ document.body.addEventListener("click", (e) => {
     // Muestra el modal (flex para centrar)
     if (modalOportunidad) modalOportunidad.style.display = "flex";
 
-  // -------------------------------
-  // Caso: botón para modificar un comentario
+    // -------------------------------
+    // Caso: botón para modificar un comentario
   } else if (boton.matches(".btn-modificar-comentario")) {
     const obj = obtenerDataInfoDesdeBoton(boton);
     elementoDataInfo = obtenerFilaDesdeBoton(boton);
@@ -356,8 +422,8 @@ document.body.addEventListener("click", (e) => {
     // Abre el modal
     if (modalComentario) modalComentario.style.display = "flex";
 
-  // -------------------------------
-  // Caso: botón para modificar una No Conformidad (NC)
+    // -------------------------------
+    // Caso: botón para modificar una No Conformidad (NC)
   } else if (boton.matches(".btn-modificar-nc")) {
     const obj = obtenerDataInfoDesdeBoton(boton);
     elementoDataInfo = obtenerFilaDesdeBoton(boton);
@@ -367,8 +433,25 @@ document.body.addEventListener("click", (e) => {
     // Abre el modal
     if (modalNC) modalNC.style.display = "flex";
 
-  // -------------------------------
-  // Caso: botón para modificar una conclusión
+    document.getElementById("noConformidadModificar").value = obj.descripcion;
+    document.getElementById("noConformidadRequisitosModificar").value =
+      obj.requisito;
+    document.getElementById("noConformidadFolioModificar").value = obj.folio;
+    document.getElementById("noConformidadFechaModificar").value = obj.fecha;
+    document.getElementById("noConformidadAccionModificar").value = obj.accion;
+    document.getElementById("noConformidadNumRACModificar").value = obj.numRAC;
+
+    obj.estado == 1
+      ? (document.getElementById("radioEliminarModificar").checked = true)
+      : (document.getElementById("radioNoEliminarModificar").checked = true);
+
+    document.getElementById("noConformidadIdVerificaModificar").value =
+      obj.idVerifica;
+    document.getElementById("noConformidadIdLiberaModificar").value =
+      obj.idLibera;
+
+    // -------------------------------
+    // Caso: botón para modificar una conclusión
   } else if (boton.matches(".btn-modificar-conclusion")) {
     const obj = obtenerDataInfoDesdeBoton(boton);
     elementoDataInfo = obtenerFilaDesdeBoton(boton);
@@ -386,31 +469,32 @@ document.body.addEventListener("click", (e) => {
     // Muestra el modal
     if (modalConclusion) modalConclusion.style.display = "flex";
 
-  // -------------------------------
-  // Caso: botón para cerrar modal de Oportunidad
+    // -------------------------------
+    // Caso: botón para cerrar modal de Oportunidad
   } else if (boton.matches(".btn-cerrar-modalOportunidad")) {
     if (modalOportunidad) modalOportunidad.style.display = "none";
 
-  // -------------------------------
-  // Caso: botón para cerrar modal de Comentario
+    // -------------------------------
+    // Caso: botón para cerrar modal de Comentario
   } else if (boton.matches(".btn-cerrar-modalComentario")) {
     if (modalComentario) modalComentario.style.display = "none";
 
-  // -------------------------------
-  // Caso: botón para cerrar modal de No Conformidad
+    // -------------------------------
+    // Caso: botón para cerrar modal de No Conformidad
   } else if (boton.matches(".btn-cerrar-modalNC")) {
     if (modalNC) modalNC.style.display = "none";
 
-  // -------------------------------
-  // Caso: botón para cerrar modal de Conclusión
+    // -------------------------------
+    // Caso: botón para cerrar modal de Conclusión
   } else if (boton.matches(".btn-cerrar-modalConclusion")) {
     if (modalConclusion) modalConclusion.style.display = "none";
+  } else if (boton.matches(".btn-cerrar-modalActividad")) {
+    if (modalActividad) modalActividad.style.display = "none";
   }
 });
 
-
+//16. Evento para modificar conclusion
 $btnModificarConclusion.addEventListener("click", (e) => {
-  console.log("Modificando conclusion");
 
   if (modalConclusion) modalConclusion.style.display = "none";
 
@@ -418,7 +502,45 @@ $btnModificarConclusion.addEventListener("click", (e) => {
     elementoDataInfo,
     "input-modificar-conclusion-textarea"
   );
-})
+});
+
+//17. Evento para modificar oportunidad
+$btnModificarOportunidad.addEventListener("click", (e) => {
+
+  if (modalOportunidad) modalOportunidad.style.display = "none";
+
+  actualizarOportunidadEnFila(
+    elementoDataInfo,
+    "input-modificar-oportunidad-textarea"
+  );
+});
+
+//18. Evento para modificar comentario
+$btnModificarComentario.addEventListener("click", (e) => {
+
+  if (modalComentario) modalComentario.style.display = "none";
+
+  actualizarComentarioEnFila(
+    elementoDataInfo,
+    "input-modificar-comentario-textarea"
+  );
+});
+
+//19. Evento para modificar NC
+$btnModificarNC.addEventListener("click", (e) => {
+  if (modalNC) modalNC.style.display = "none";
+
+  actualizarNCEnFila(
+    elementoDataInfo,
+  );
+});
+
+//20. Evento para modificar NC
+$btnModificarActividad.addEventListener("click", (e) => {
+  if (modalActividad) modalActividad.style.display = "none";
+
+  actualizarActividadEnFila(elementoDataInfo);
+});
 
 
 //D. Funciones
@@ -597,11 +719,12 @@ function agregaraTabla(idInput, idTable, atributo, idAtributo) {
   // Limpiar el input
   input.value = "";
 }
+
 // Función para agregar una actividad a la tabla
 function agregarActividadATabla(dataActividad, idTable = "tabla-actividades") {
   const { horarioInicial, horarioFinal, proceso, actividad, requisito, participantes, contactados, area } = dataActividad;
 
-  // Validación básica (puedes ajustarla a tu necesidad)
+  // Validación básica
   if (!horarioInicial || !horarioFinal || !proceso || !actividad || !requisito) {
     alert("Por favor, llena todos los campos requeridos (horario, proceso, actividad, requisito).");
     return;
@@ -614,7 +737,7 @@ function agregarActividadATabla(dataActividad, idTable = "tabla-actividades") {
   // Crear nueva fila
   const nuevaFila = document.createElement("tr");
 
-  // Guardar el objeto completo en data-info (para luego modificar/eliminar)
+  // Guardar el objeto completo en data-info
   nuevaFila.setAttribute("data-info", JSON.stringify(dataActividad));
 
   // Crear celdas
@@ -660,13 +783,25 @@ function agregarActividadATabla(dataActividad, idTable = "tabla-actividades") {
 
   // Agregar la fila al tbody
   tbody.appendChild(nuevaFila);
+
+  // ✅ Limpiar los campos del modal / formulario
+  document.getElementById("inicioActividad").value = "";
+  document.getElementById("finActividad").value = "";
+  document.getElementById("tipoProceso").value = "";
+  document.getElementById("actividadTexto").value = "";
+  document.getElementById("requisitoCriterio").value = "";
+  document.getElementById("areaSitioActividad").value = "";
+
+  // Limpiar tarjetas de participantes y contactados
+  document.getElementById("divParticipantesActividad").innerHTML = "";
+  document.getElementById("divContactosActividad").innerHTML = "";
 }
 
-// Función para agregar una no conformidad a la tabla
+// Función para agregar una no conformidad
 function agregarNoConformidadATabla(dataNoConformidad, idTable = "tabla-noconformidades") {
   const { descripcion, requisito, folio, fecha, accion, numRAC, estado, idVerifica, idLibera } = dataNoConformidad;
 
-  // Validación básica (ajústala a lo que sea obligatorio)
+  // Validación básica
   if (!descripcion || !requisito) {
     alert("Por favor, llena al menos la descripción y el requisito.");
     return;
@@ -679,7 +814,7 @@ function agregarNoConformidadATabla(dataNoConformidad, idTable = "tabla-noconfor
   // Crear nueva fila
   const nuevaFila = document.createElement("tr");
 
-  // Guardar el objeto completo en data-info (para luego modificar/eliminar)
+  // Guardar el objeto completo en data-info
   nuevaFila.setAttribute("data-info", JSON.stringify(dataNoConformidad));
 
   // Crear celdas
@@ -717,6 +852,23 @@ function agregarNoConformidadATabla(dataNoConformidad, idTable = "tabla-noconfor
 
   // Agregar la fila al tbody
   tbody.appendChild(nuevaFila);
+
+// Limpiar campos del formulario
+document.getElementById("noConformidad").value = "";
+document.getElementById("noConformidadRequisitos").value = "";
+document.getElementById("noConformidadFolio").value = "";
+document.getElementById("noConformidadFecha").value = "";
+document.getElementById("noConformidadAccion").value = "";
+document.getElementById("noConformidadNumRAC").value = "";
+
+// Limpiar radios
+document.querySelector('input[name="estadoEliminar"][value="eliminar"]').checked = false;
+document.querySelector('input[name="estadoEliminar"][value="noEliminar"]').checked = true;
+
+// Limpiar selects
+document.getElementById("noConformidadIdVerifica").value = "";
+document.getElementById("noConformidadIdLibera").value = "";
+
 }
 
 //Funcion para obtener los ids (en data-value) de un div de tarjetas
@@ -803,7 +955,301 @@ function actualizarConclusionEnFila(fila, idTextarea) {
   }
 }
 
+// Función para modificar oportunidad
+function actualizarOportunidadEnFila(fila, idTextarea) {
+  if (!fila) return;
 
+  // Obtener el valor del textarea
+  const input = document.getElementById(idTextarea);
+  if (!input) {
+    console.error("No se encontró el textarea con id:", idTextarea);
+    return;
+  }
+  const nuevaOportunidad = input.value;
+
+  // Leer el data-info de la fila
+  const raw = fila.getAttribute("data-info") ?? fila.dataset.info;
+  if (!raw) return;
+
+  try {
+    const obj = JSON.parse(raw);
+
+    // Actualizar los datos en el objeto
+    obj.oportunidad = nuevaOportunidad;
+    if (obj.idOportunidad !== undefined) {
+      obj.idOportunidad = obj.idOportunidad; // mantener el mismo id
+    }
+
+    // Guardar de nuevo en la fila (atributo data-info)
+    fila.setAttribute("data-info", JSON.stringify(obj));
+
+    // 👇 Actualizar también el HTML (primer <td>)
+    const primeraCelda = fila.querySelector("td");
+    if (primeraCelda) {
+      primeraCelda.textContent = nuevaOportunidad;
+    }
+  } catch (err) {
+    console.error("No se pudo actualizar la oportunidad:", err);
+  }
+}
+
+// Función para modificar comentario
+function actualizarComentarioEnFila(fila, idTextarea) {
+  if (!fila) return;
+
+  // Obtener el valor del textarea
+  const input = document.getElementById(idTextarea);
+  if (!input) {
+    console.error("No se encontró el textarea con id:", idTextarea);
+    return;
+  }
+  const nuevoComentario = input.value;
+
+  // Leer el data-info de la fila
+  const raw = fila.getAttribute("data-info") ?? fila.dataset.info;
+  if (!raw) return;
+
+  try {
+    const obj = JSON.parse(raw);
+
+    // Actualizar los datos en el objeto
+    obj.comentario = nuevoComentario;
+    if (obj.idComentario !== undefined) {
+      obj.idComentario = obj.idComentario; // mantener el mismo id
+    }
+
+    // Guardar de nuevo en la fila (atributo data-info)
+    fila.setAttribute("data-info", JSON.stringify(obj));
+
+    // 👇 Actualizar también el HTML (primer <td>)
+    const primeraCelda = fila.querySelector("td");
+    if (primeraCelda) {
+      primeraCelda.textContent = nuevoComentario;
+    }
+  } catch (err) {
+    console.error("No se pudo actualizar la comentario:", err);
+  }
+}
+
+// Función para modificar No Conformidad
+function actualizarNCEnFila(fila) {
+  if (!fila) return;
+
+  const raw = fila.getAttribute("data-info") ?? fila.dataset.info;
+  if (!raw) return;
+
+  try {
+    const obj = JSON.parse(raw);
+
+    // Guardar idNC original si existe
+    const idOriginal = obj.idNC ?? null;
+
+    // Actualizar los campos con los valores de los inputs
+    obj.descripcion = document.getElementById("noConformidadModificar").value;
+    obj.requisito = document.getElementById(
+      "noConformidadRequisitosModificar"
+    ).value;
+    obj.folio = document.getElementById("noConformidadFolioModificar").value;
+    obj.fecha = document.getElementById("noConformidadFechaModificar").value;
+    obj.accion = document.getElementById("noConformidadAccionModificar").value;
+    obj.numRAC = document.getElementById("noConformidadNumRACModificar").value;
+
+    // Estado (radio buttons)
+    obj.estado = document.getElementById("radioEliminarModificar").checked
+      ? 1
+      : 0;
+
+    // Verifica y Libera
+    obj.idVerifica = document.getElementById(
+      "noConformidadIdVerificaModificar"
+    ).value;
+    obj.idLibera = document.getElementById(
+      "noConformidadIdLiberaModificar"
+    ).value;
+
+    // Restaurar el idNC original
+    if (idOriginal !== null) obj.idNC = idOriginal;
+
+    // Guardar actualizado en el atributo data-info
+    fila.setAttribute("data-info", JSON.stringify(obj));
+
+    // Actualizar las celdas visibles de la tabla
+    const celdas = fila.querySelectorAll("td");
+    if (celdas.length > 0) celdas[0].textContent = obj.descripcion;
+    if (celdas.length > 1) celdas[1].textContent = obj.requisito;
+
+    // ✅ Limpiar inputs
+    document.getElementById("noConformidadModificar").value = "";
+    document.getElementById("noConformidadRequisitosModificar").value = "";
+    document.getElementById("noConformidadFolioModificar").value = "";
+    document.getElementById("noConformidadFechaModificar").value = "";
+    document.getElementById("noConformidadAccionModificar").value = "";
+    document.getElementById("noConformidadNumRACModificar").value = "";
+
+    // Limpiar radios
+    document.getElementById("radioEliminarModificar").checked = false;
+    document.getElementById("radioNoEliminarModificar").checked = true;
+
+    // Limpiar selects
+    document.getElementById("noConformidadIdVerificaModificar").value = "";
+    document.getElementById("noConformidadIdLiberaModificar").value = "";
+  } catch (err) {
+    console.error("No se pudo actualizar la No Conformidad:", err);
+  }
+}
+
+// Función para modificar Actividad
+function actualizarActividadEnFila(fila) {
+  if (!fila) return;
+
+  const raw = fila.getAttribute("data-info") ?? fila.dataset.info;
+  if (!raw) return;
+
+  try {
+    const obj = JSON.parse(raw);
+
+    const idOriginal = obj.idActividad ?? null;
+
+    obj.horarioInicial = document.getElementById(
+      "modificarInicioActividad"
+    ).value;
+    obj.horarioFinal = document.getElementById("modificarFinActividad").value;
+    obj.proceso = document.getElementById("modificarTipoProceso").value;
+    obj.actividad = document.getElementById("modificarActividadTexto").value;
+    obj.requisito = document.getElementById("modificarRequisitoCriterio").value;
+    obj.area = document.getElementById("modificarAreaSitioActividad").value;
+
+    obj.participantes = obtenerInfoTarjetas(
+      document.getElementById("divModificarParticipantesActividad")
+    );
+    obj.contactados = obtenerInfoTarjetas(
+      document.getElementById("divModificarContactosActividad")
+    );
+
+    if (idOriginal !== null) obj.idActividad = idOriginal;
+
+    fila.setAttribute("data-info", JSON.stringify(obj));
+
+    const celdas = fila.querySelectorAll("td");
+    if (celdas.length > 0)
+      celdas[0].textContent = `${obj.horarioInicial} - ${obj.horarioFinal}`;
+    if (celdas.length > 1) celdas[1].textContent = obj.proceso;
+    if (celdas.length > 2) celdas[2].textContent = obj.actividad;
+    if (celdas.length > 3) celdas[3].textContent = obj.requisito;
+
+    // ✅ Limpiar inputs y tarjetas al finalizar
+    document.getElementById("modificarInicioActividad").value = "";
+    document.getElementById("modificarFinActividad").value = "";
+    document.getElementById("modificarTipoProceso").value = "";
+    document.getElementById("modificarActividadTexto").value = "";
+    document.getElementById("modificarRequisitoCriterio").value = "";
+    document.getElementById("modificarAreaSitioActividad").value = "";
+
+    const divParticipantes = document.getElementById(
+      "divModificarParticipantesActividad"
+    );
+    if (divParticipantes) divParticipantes.innerHTML = "";
+
+    const divContactados = document.getElementById(
+      "divModificarContactosActividad"
+    );
+    if (divContactados) divContactados.innerHTML = "";
+  } catch (err) {
+    console.error("No se pudo actualizar la Actividad:", err);
+  }
+}
+
+// Función para agregar tarjetas desde un arreglo de usuarios
+function agregarTarjetasDesdeIdsUsuarios(idsUsuarios, usuarios, $DivTarjet) {
+  idsUsuarios.forEach(id => {
+    // Buscar el usuario en el array de objetos
+    const usuario = usuarios.find(u => u.idUsuario === id);
+
+    if (!usuario) {
+      console.warn(`Usuario con id ${id} no encontrado.`);
+      return;
+    }
+
+    // Verificar si ya existe la tarjeta
+    if ($DivTarjet.querySelector(`.tarjet[data-value="${id}"]`)) {
+      console.warn(`La tarjeta del usuario con id ${id} ya existe.`);
+      return;
+    }
+
+    // Crear la tarjeta
+    const $Tarjeta = document.createElement("div");
+    $Tarjeta.classList.add("tarjet");
+    $Tarjeta.setAttribute("data-value", id);
+
+    // Crear el <p> con el nombre completo
+    const $P = document.createElement("p");
+    $P.textContent = `${usuario.nombreCompleto} ${usuario.apellidoPaterno} ${usuario.apellidoMaterno}`;
+
+    // Crear el botón de eliminar
+    const $Boton = document.createElement("button");
+    $Boton.type = "button";
+    $Boton.textContent = "X";
+    $Boton.classList.add("btn-closed");
+
+    // Evento para eliminar tarjeta
+    $Boton.addEventListener("click", () => {
+      $Tarjeta.remove();
+    });
+
+    // Ensamblar tarjeta
+    $Tarjeta.appendChild($P);
+    $Tarjeta.appendChild($Boton);
+
+    // Insertar en el div
+    $DivTarjet.appendChild($Tarjeta);
+  });
+}
+
+// Función para agregar tarjetas desde un arreglo de contactos
+function agregarTarjetasDesdeIdsContactos(idsContactos, contactos, $DivTarjet) {
+  idsContactos.forEach(id => {
+    // Buscar el contacto en el array de objetos
+    const contacto = contactos.find(c => c.idContacto === id);
+
+    if (!contacto) {
+      console.warn(`Contacto con id ${id} no encontrado.`);
+      return;
+    }
+
+    // Verificar si ya existe la tarjeta
+    if ($DivTarjet.querySelector(`.tarjet[data-value="${id}"]`)) {
+      console.warn(`La tarjeta del contacto con id ${id} ya existe.`);
+      return;
+    }
+
+    // Crear la tarjeta
+    const $Tarjeta = document.createElement("div");
+    $Tarjeta.classList.add("tarjet");
+    $Tarjeta.setAttribute("data-value", id);
+
+    // Crear el <p> con el nombre completo
+    const $P = document.createElement("p");
+    $P.textContent = `${contacto.nombreCompleto} ${contacto.apellidoPaterno} ${contacto.apellidoMaterno}`;
+
+    // Crear el botón de eliminar
+    const $Boton = document.createElement("button");
+    $Boton.type = "button";
+    $Boton.textContent = "X";
+    $Boton.classList.add("btn-closed");
+
+    // Evento para eliminar tarjeta
+    $Boton.addEventListener("click", () => {
+      $Tarjeta.remove();
+    });
+
+    // Ensamblar tarjeta
+    $Tarjeta.appendChild($P);
+    $Tarjeta.appendChild($Boton);
+
+    // Insertar en el div
+    $DivTarjet.appendChild($Tarjeta);
+  });
+}
 
 
 

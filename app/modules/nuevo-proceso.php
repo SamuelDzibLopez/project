@@ -858,6 +858,7 @@ require_once './../../server/php/permisos.php';
         </div>
     </div>
 
+    <!-- Modal Modificar Actividad -->
     <div id="modalModificarActividadFondo" class="modalModificarActividadFondo"
         style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: none; align-items: center; justify-content: center; z-index: 9999;">
         <div id="modalModificarActividad"
@@ -922,7 +923,7 @@ require_once './../../server/php/permisos.php';
             </div>
 
             <div style="text-align: right; margin-top: 15px;">
-                <button type="button" id="btnCancelarModificarActividad" class="btn btn-secondary">Cancelar</button>
+                <button type="button" id="btnCancelarModificarActividad" class="btn btn-secondary btn-cerrar-modalActividad">Cancelar</button>
                 <button type="button" id="btnGuardarModificarActividad" class="btn btn-primary">Guardar</button>
             </div>
         </div>
@@ -1002,19 +1003,82 @@ require_once './../../server/php/permisos.php';
             <h3 style="margin-top: 0;">Modificar No Conformidad</h3>
             <div class="div-datos-mis-datos inputs-responsive">
                 <!-- Acción -->
-                <div class="form-floating inputs-responsive">
-                    <textarea class="form-control inputs-responsive" placeholder="No Conformidad"
-                        id="ac-modificar-accion-textarea" style="height: 100px"></textarea>
-                    <label for="ac-modificar-accion-textarea">No Conformidad</label>
+                <div class="input-group mb-3">
+                    <!--No confomidad-->
+                    <input class="form-control" list="mejoras" id="noConformidadModificar" placeholder="Agregar no conformidad">
+                </div>
+
+                <div class="input-group mb-3">
+                    <!--Requisito-->
+                    <input class="form-control" list="mejoras" id="noConformidadRequisitosModificar" placeholder="Requisito">
+                </div>
+
+                <div class="input-group mb-3">
+                    <!--Folio-->
+                    <input class="form-control" list="mejoras" id="noConformidadFolioModificar" placeholder="Folio">
+                </div>
+
+                <div class="input-group mb-3">
+                    <!--Fecha-->
+                    <input class="form-control" list="mejoras" id="noConformidadFechaModificar" placeholder="Fecha" type="date">
+                </div>
+
+                <div class="input-group mb-3">
+                    <!--Accion-->
+                    <input class="form-control" list="mejoras" id="noConformidadAccionModificar" placeholder="Accion">
+                </div>
+
+                <div class="input-group mb-3">
+                    <!--Numero de RAC-->
+                    <input class="form-control" list="mejoras" id="noConformidadNumRACModificar" placeholder="Numero de RAC">
+                </div>
+
+                <div class="input-group mb-3">
+                    <!--Estado-->
+                    <div class="form-check form-check-inline">
+                        <input 
+                            class="form-check-input" 
+                            type="radio" 
+                            name="estadoEliminarModificar" 
+                            id="radioEliminarModificar" 
+                            value="eliminar">
+                        <label class="form-check-label" for="radioEliminarModificar">Eliminar</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input 
+                            class="form-check-input" 
+                            type="radio" 
+                            name="estadoEliminarModificar" 
+                            id="radioNoEliminarModificar" 
+                            value="noEliminar" 
+                        >
+                        <label class="form-check-label" for="radioNoEliminarModificar">No Eliminar</label>
+                    </div>
+                </div>
+
+                <div class="input-group mb-3">
+                    <!--Personal que verifica-->
+                    <select class="form-select" id="noConformidadIdVerificaModificar">
+                        <option value="" selected disabled>Seleccione al personal que verifica</option>
+                    </select>
+                </div>
+
+                <div class="input-group mb-3">
+                    <!--Personal que libera-->
+                    <select class="form-select" id="noConformidadIdLiberaModificar">
+                        <option value="" selected disabled>Seleccione al personal que libera</option>
+                    </select>
                 </div>
             </div>
 
             <div style="text-align: right; margin-top: 15px;">
                 <button type="button" class="btn btn-secondary btn-cerrar-modalNC">Cancelar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-primary" id="btnModificarNC">Guardar</button>
             </div>
         </div>
     </div>
+
 
     <script type="module" src="./../../js/seleccionar-proceso.js"></script>
     <script type="module" src="./../../js/nueva-auditoria.js"></script>
