@@ -6,7 +6,7 @@ import { url_auditorias_create_auditoria, url_usuarios_obtener_id_usuarios, url_
 //1. Formulario de auditoria
 const $formAuditoria = document.getElementById("auditoria");
 //2. Array de selects de usuarios
-const idSelectsUsuarios = ["idElabora", "idValida", "idCoordinador", "idRecibe", "auditoresLideres", "auditor", "participantesActividad", "noConformidadIdVerifica", "noConformidadIdLibera", "usuarios", "noConformidadIdVerificaModificar", "noConformidadIdLiberaModificar", "modificarParticipantesActividad", "coordinador-queja", "recibe-queja"];
+const idSelectsUsuarios = ["idElabora", "idValida", "idCoordinador", "idRecibe", "auditoresLideres", "auditor", "participantesActividad", "noConformidadIdVerifica", "noConformidadIdLibera", "usuarios", "noConformidadIdVerificaModificar", "noConformidadIdLiberaModificar", "modificarParticipantesActividad", "coordinador-queja", "recibe-queja", "usuarios-queja"];
 //3. Array de selects de contactos
 const idSelectsContactos = ["contactosActividad", "participantes", "modificarContactosActividad"];
 //4. Boton de auditores lideres

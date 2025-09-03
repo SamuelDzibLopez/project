@@ -720,6 +720,7 @@ require_once './../../server/php/permisos.php';
                                 </div>
                                 <hr class="hr-blue">
 
+                                <!--Acceso a usuarios-->
                                 <div class="div-mis-datos">
                                     <label for="usuarios" class="form-label">Agrega
                                         usuarios:</label>
@@ -876,6 +877,22 @@ require_once './../../server/php/permisos.php';
                                             <select class="form-select" id="recibe-queja" required>
                                                 <option value="" selected disabled>Seleccione quien recibe</option>
                                             </select>
+                                        </div>
+
+                                        <!--Acceso a usuarios-->
+                                        <div class="div-mis-datos">
+                                            <label for="usuarios-queja" class="form-label">Agrega
+                                                usuarios:</label>
+                                            <div class="input-group mb-3">
+                                                <select class="form-control" list="usuarios" id="usuarios-queja"
+                                                    placeholder="Buscar usuario...">
+                                                    <option value="" disebled> Agrege usuarios</option>
+                                                </select>
+                                                <button class="btn btn-primary" type="button" id="btnUsuarios-queja">Agregar</button>
+                                            </div>
+                                            <!--Div de usuarios-->
+                                            <div class="div-participantes inputs-responsive" id="divUsuarios-queja">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
