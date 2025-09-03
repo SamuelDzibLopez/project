@@ -122,21 +122,73 @@ try {
         $pdo->prepare("INSERT INTO conclusiones (idAuditoria, conclusion) VALUES (?, ?)")->execute([$idAuditoria, $con["conclusion"]]);
     }
 
-    // 11. NO CONFORMIDADES
+    // 11. NO CONFORMIDADES + crear PROCESO (Acción Correctiva) y accionesCorrectivas
     foreach ($noConformidades as $nc) {
-        $pdo->prepare("INSERT INTO noConformidades (idAuditoria, descripcion, requisito, folio, fecha, accion, numRAC, estado, idVerifica, idLibera) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
-            ->execute([
-                $idAuditoria,
-                $nc["descripcion"],
-                $nc["requisito"],
-                $nc["folio"],
-                $nc["fecha"],
-                $nc["accion"],
-                $nc["numRAC"],
-                $nc["estado"],
-                $nc["idVerifica"],
-                $nc["idLibera"]
-            ]);
+
+        // 11a) Insertar no conformidad y obtener su id
+        $stmtNoC = $pdo->prepare("INSERT INTO noConformidades (idAuditoria, descripcion, requisito, folio, fecha, accion, numRAC, estado, idVerifica, idLibera) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmtNoC->execute([
+            $idAuditoria,
+            $nc["descripcion"],
+            $nc["requisito"],
+            $nc["folio"],
+            $nc["fecha"],
+            $nc["accion"],
+            // conservar numRAC si viene (estructura original)
+            array_key_exists('numRAC', $nc) ? $nc["numRAC"] : null,
+            $nc["estado"],
+            $nc["idVerifica"],
+            $nc["idLibera"]
+        ]);
+        $idNoConformidad = $pdo->lastInsertId();
+
+        // 11b) Determinar folio para el proceso de la Acción Correctiva:
+        // usar numAC si viene, si no usar numRAC (compatibilidad)
+        $folioAC = null;
+        if (array_key_exists('numAC', $nc) && $nc['numAC'] !== '') {
+            $folioAC = $nc['numAC'];
+        } elseif (array_key_exists('numRAC', $nc) && $nc['numRAC'] !== '') {
+            $folioAC = $nc['numRAC'];
+        }
+
+        // 11c) Crear PROCESO tipo "Acción Correctiva"
+        $stmtProcAC = $pdo->prepare("INSERT INTO procesos (tipoProceso, folio, estado) VALUES (?, ?, ?)");
+        $stmtProcAC->execute([
+            "Acción Correctiva",
+            $folioAC,
+            // estado inicial, puedes cambiar si tu lógica requiere otro estado
+            "Abierto"
+        ]);
+        $idProcesoAC = $pdo->lastInsertId();
+
+        // 11d) Insertar registro en accionesCorrectivas ligado al idNoConformidad y al nuevo proceso
+        $stmtACC = $pdo->prepare("INSERT INTO accionesCorrectivas (
+            idProceso, idNoConformidad, areaProceso, idResponsable, fecha, origenRequisito,
+            fuenteNC, requiereAC, requiereCorreccion, tecnicaUtilizada, causaRaiz, aCRealizar,
+            seguimiento, idDefinir, idVerificar, fechaCierre, idCoordinador
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+        $stmtACC->execute([
+            $idProcesoAC,
+            $idNoConformidad,
+            $nc["areaProceso"]        ?? null,
+            $nc["idResponsable"]      ?? null,
+            // si el campo fecha en la NC representa la fecha de la AC se reusa, si no dejar null
+            $nc["fecha"]              ?? null,
+            $nc["origenRequisito"]    ?? null,
+            $nc["fuenteNC"]           ?? null,
+            // asegurar que se inserte 0/1
+            isset($nc["requiereAC"]) ? (int)$nc["requiereAC"] : 0,
+            isset($nc["requiereCorreccion"]) ? (int)$nc["requiereCorreccion"] : 0,
+            $nc["tecnicaUtilizada"]   ?? null,
+            $nc["causaRaiz"]          ?? null,
+            $nc["aCRealizar"]         ?? null,
+            $nc["seguimiento"]        ?? null,
+            $nc["idDefinir"]          ?? null,
+            $nc["idVerificar"]        ?? null,
+            $nc["fechaCierre"]        ?? null,
+            $nc["idCoordinador"]      ?? null
+        ]);
     }
 
     // Confirmar transacción
@@ -165,5 +217,3 @@ try {
         "data" => null
     ]);
 }
-
-

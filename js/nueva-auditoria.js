@@ -1,5 +1,5 @@
 //A. Importación de modulos
-import { url_auditorias_create_auditoria, url_usuarios_obtener_id_usuarios, url_contactos_obtener_id_contactos } from "./urls/urls";
+import { url_auditorias_create_auditoria, url_usuarios_obtener_id_usuarios, url_contactos_obtener_id_contactos, procesos } from "./urls/urls";
 
 //B. Definicion de elementos
 
@@ -326,6 +326,8 @@ $formAuditoria.addEventListener("submit", async (e) => {
     const result = await response.json();
     console.log("Respuesta del servidor:", result);
     alert(result.message);
+    window.location.href = procesos;
+
   } catch (error) {
     console.error("Error al crear la auditoría:", error);
     alert(result.message);
@@ -550,7 +552,7 @@ async function cargarUsuariosEnSelects(idsSelects, url) {
         if (!select) return;
 
         // Limpiar y agregar placeholder
-        select.innerHTML = `<option value="" disabled selected>Seleccione un usuario</option>`;
+        select.innerHTML += ``;
 
         // Insertar usuarios
         data.forEach(
@@ -583,7 +585,7 @@ async function cargarContactosEnSelects(idsSelects, url) {
         if (!select) return;
 
         // Limpiar y agregar placeholder
-        select.innerHTML = `<option value="" disabled selected>Seleccione un contacto</option>`;
+        select.innerHTML += ``;
 
         // Insertar contactos
         data.forEach(({ idContacto, nombreCompleto, apellidoPaterno, apellidoMaterno }) => {
