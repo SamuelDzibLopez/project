@@ -745,40 +745,57 @@ require_once './../../server/php/permisos.php';
                         <!-- Quejas y sugerencias -->
                         <div class="div-gray" id="Sujerencia">
                             <form class="div-main-blur" id="form-quejas">
+
                                 <div class="div-subtitle">
                                     <img src="/project/sources/icons/icon-proyectos.svg" alt="">
                                     <h2 class="font-subtitle">Información</h2>
                                 </div>
+
                                 <hr class="hr-blue">
+
                                 <div class="div-mis-datos">
                                     <div class="div-datos-mis-datos">
+
+                                        <!--Fecha-->
                                         <div class="mb-3">
-                                            <label for="fecha" class="form-label">Fecha:</label>
-                                            <input type="date" class="form-control" id="fecha">
+                                            <label for="fecha-queja" class="form-label">Fecha:</label>
+                                            <input type="date" class="form-control" id="fecha-queja">
                                         </div>
+
+                                        <!--Folio-->
                                         <div class="mb-3">
-                                            <label for="folio" class="form-label">Folio:</label>
-                                            <input type="text" class="form-control" id="folio">
+                                            <label for="folio-queja" class="form-label">Folio:</label>
+                                            <input type="text" class="form-control" id="folio-queja">
                                         </div>
+
+                                        <!--Nombre-->
                                         <div class="mb-3">
-                                            <label for="nombre" class="form-label">Nombre:</label>
-                                            <input type="text" class="form-control" id="nombre">
+                                            <label for="nombre-queja" class="form-label">Nombre:</label>
+                                            <input type="text" class="form-control" id="nombre-queja">
                                         </div>
+
+                                        <!--Correo-->
                                         <div class="mb-3">
-                                            <label for="correo" class="form-label">Correo electrónico:</label>
-                                            <input type="email" class="form-control" id="correo" required>
+                                            <label for="correo-queja" class="form-label">Correo electrónico:</label>
+                                            <input type="email" class="form-control" id="correo-queja" required>
                                         </div>
+
+                                        <!--Telefono-->
                                         <div class="mb-3">
-                                            <label for="telefono" class="form-label">Teléfono:</label>
-                                            <input type="tel" class="form-control" id="telefono">
+                                            <label for="telefono-queja" class="form-label">Teléfono:</label>
+                                            <input type="tel" class="form-control" id="telefono-queja">
                                         </div>
+
+                                        <!--Matricula-->
                                         <div class="mb-3">
-                                            <label for="matricula" class="form-label">No. de Control:</label>
-                                            <input type="text" class="form-control" id="matricula">
+                                            <label for="matricula-queja" class="form-label">No. de Control:</label>
+                                            <input type="text" class="form-control" id="matricula-queja">
                                         </div>
+
+                                        <!--Carrera-->
                                         <div class="mb-3">
-                                            <label for="carrera" class="form-label">Carrera:</label>
-                                            <select class="form-select" id="carrera">
+                                            <label for="carrera-queja" class="form-label">Carrera:</label>
+                                            <select class="form-select" id="carrera-quja">
                                                 <option value="" selected>Seleccione una carrera</option>
                                                 <option value="ISC">Ing. en Sistemas Computacionales</option>
                                                 <option value="IGE">Ing. en Gestión Empresarial</option>
@@ -788,9 +805,11 @@ require_once './../../server/php/permisos.php';
                                                 <option value="IQ">Ing. Química</option>
                                             </select>
                                         </div>
+
+                                        <!--Semestre-->
                                         <div class="mb-3">
-                                            <label for="semestre" class="form-label">Semestre:</label>
-                                            <select class="form-select" id="semestre">
+                                            <label for="semestre-queja" class="form-label">Semestre:</label>
+                                            <select class="form-select" id="semestre-queja">
                                                 <option value="" selected>Seleccione un semestre</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
@@ -806,42 +825,62 @@ require_once './../../server/php/permisos.php';
                                                 <option value="12">12</option>
                                             </select>
                                         </div>
+
+                                        <!--Grupo-->
                                         <div class="mb-3">
-                                            <label for="grupo" class="form-label">Grupo:</label>
-                                            <input type="text" class="form-control" id="grupo">
+                                            <label for="grupo-queja" class="form-label">Grupo:</label>
+                                            <input type="text" class="form-control" id="grupo-queja">
                                         </div>
+
+                                        <!--Turno-->
                                         <div class="mb-3">
-                                            <label for="turno" class="form-label">Turno:</label>
-                                            <select class="form-select" id="turno">
+                                            <label for="turno-queja" class="form-label">Turno:</label>
+                                            <select class="form-select" id="turno-queja">
                                                 <option value="" selected>Seleccione un turno</option>
                                                 <option value="Matutino">Matutino</option>
                                                 <option value="Vespertino">Vespertino</option>
                                             </select>
                                         </div>
+
+                                        <!--Aula-->
                                         <div class="mb-3">
-                                            <label for="aula" class="form-label">Aula:</label>
-                                            <input type="text" class="form-control" id="aula">
+                                            <label for="aula-queja" class="form-label">Aula:</label>
+                                            <input type="text" class="form-control" id="aula-queja">
                                         </div>
+
+                                        <!--Queja-->
                                         <div class="form-floating mb-3">
-                                            <textarea class="form-control" placeholder="Queja" id="queja"
+                                            <textarea class="form-control" placeholder="Queja" id="queja-queja"
                                                 style="height: 100px"></textarea>
-                                            <label for="queja">Queja / Sugerencia</label>
+                                            <label for="queja-queja">Queja / Sugerencia</label>
                                         </div>
+
+                                        <!--Respuesta-->
                                         <div class="form-floating mb-3">
-                                            <textarea class="form-control" placeholder="Respuesta" id="respuesta"
+                                            <textarea class="form-control" placeholder="Respuesta" id="respuesta-queja"
                                                 style="height: 100px"></textarea>
-                                            <label for="respuesta">Respuesta</label>
+                                            <label for="respuesta-queja">Respuesta</label>
                                         </div>
+
+                                        <!--Coordinador-->
                                         <div class="mb-3">
-                                            <label for="subdirector" class="form-label">Subdirector:</label>
-                                            <select class="form-select" id="subdirector" required>
-                                                <option value="" selected disabled>Seleccione el subdirector</option>
+                                            <label for="coordinador-queja" class="form-label">Coordinador:</label>
+                                            <select class="form-select" id="coordinador-queja" required>
+                                                <option value="" selected disabled>Seleccione el Coordinador</option>
+                                            </select>
+                                        </div>
+
+                                        <!--Recibe-->
+                                        <div class="mb-3">
+                                            <label for="subdirector" class="form-label">Persona que recibe:</label>
+                                            <select class="form-select" id="recibe-queja" required>
+                                                <option value="" selected disabled>Seleccione quien recibe</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="div_buttons">
-                                    <button type="submit" class="btn-apartado-center escalado">Crear
+                                    <button type="submit" class="btn-apartado-center escalado" id="btn-queja">Crear
                                         queja/sugerencia</button>
                                 </div>
                             </form>
@@ -1082,6 +1121,7 @@ require_once './../../server/php/permisos.php';
 
     <script type="module" src="./../../js/seleccionar-proceso.js"></script>
     <script type="module" src="./../../js/nueva-auditoria.js"></script>
+    <script type="module" src="./../../js/nueva-queja.js"></script>
 
     <!-- <script type="module" src="./../../js/nuevo-proceso.js"></script>
     <script type="module" src="./../../js/auditoria-nueva.js"></script>

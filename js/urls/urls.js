@@ -23,6 +23,9 @@ export const url_procesos_obtener_procesos =  "/project/server/php/procesos/obte
 //Auditorias
 export const url_auditorias_create_auditoria = "/project/server/php/auditorias/create-auditoria.php";
 
+//Quejas y Sugerencias
+export const url_quejas_create_queja = "/project/server/php/quejas/create-queja.php";
+
 //Contactos
 export const url_contactos_obtener_contactos = "/project/server/php/contactos/obtener-contactos.php?pagina=";
 export const url_contactos_crear_contacto =  "/project/server/php/contactos/create-contact.php";

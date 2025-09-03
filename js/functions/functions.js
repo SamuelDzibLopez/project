@@ -151,15 +151,15 @@ export function createTarjetsProcesos(arrayData) {
         let ruta = '';
 
         if (e.tipoProceso.toLowerCase() === 'auditoría') {
-            ruta = '/residencia/app/modules/auditoria.php';
+            ruta = '/project/app/modules/auditoria.php';
         } else if (e.tipoProceso.toLowerCase() === "queja o sugerencia") {
-            ruta = "/residencia/app/modules/queja.php";
+            ruta = "/project/app/modules/queja.php";
         } else if (e.tipoProceso.toLowerCase() === "producto no conforme") {
-            ruta = "/residencia/app/modules/pnc.php";
+            ruta = "/project/app/modules/pnc.php";
         } else if (e.tipoProceso.toLowerCase() === "accion correctiva") {
-            ruta = "/residencia/app/modules/ac.php";
+            ruta = "/project/app/modules/ac.php";
         } else {
-          ruta = "/residencia/app/modules/proceso.php"; // Ruta por defecto
+          ruta = "/project/app/modules/proceso.php"; // Ruta por defecto
         }
 
         let userCard = `
