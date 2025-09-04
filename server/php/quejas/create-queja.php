@@ -43,8 +43,14 @@ try {
     $aula           = $input["aula"] ?? "";
     $textoQueja     = $input["textoQueja"] ?? "";
     $respuesta      = $input["respuesta"] ?? "";
+
+    // 🔹 Manejo de idCoordinador e idRecibe
     $idCoordinador  = $input["idCoordinador"] ?? null;
     $idRecibe       = $input["idRecibe"] ?? null;
+
+    // Si llegan como "", convertir a null
+    $idCoordinador = ($idCoordinador === "" ? null : $idCoordinador);
+    $idRecibe      = ($idRecibe === "" ? null : $idRecibe);
 
     $usuariosProceso = $input["usuariosProceso"] ?? [];
 

@@ -796,7 +796,7 @@ require_once './../../server/php/permisos.php';
                                         <!--Carrera-->
                                         <div class="mb-3">
                                             <label for="carrera-queja" class="form-label">Carrera:</label>
-                                            <select class="form-select" id="carrera-quja">
+                                            <select class="form-select" id="carrera-queja">
                                                 <option value="" selected>Seleccione una carrera</option>
                                                 <option value="ISC">Ing. en Sistemas Computacionales</option>
                                                 <option value="IGE">Ing. en Gestión Empresarial</option>
@@ -866,7 +866,7 @@ require_once './../../server/php/permisos.php';
                                         <!--Coordinador-->
                                         <div class="mb-3">
                                             <label for="coordinador-queja" class="form-label">Coordinador:</label>
-                                            <select class="form-select" id="coordinador-queja" required>
+                                            <select class="form-select" id="coordinador-queja">
                                                 <option value="" selected disabled>Seleccione el Coordinador</option>
                                             </select>
                                         </div>
@@ -874,7 +874,7 @@ require_once './../../server/php/permisos.php';
                                         <!--Recibe-->
                                         <div class="mb-3">
                                             <label for="subdirector" class="form-label">Persona que recibe:</label>
-                                            <select class="form-select" id="recibe-queja" required>
+                                            <select class="form-select" id="recibe-queja">
                                                 <option value="" selected disabled>Seleccione quien recibe</option>
                                             </select>
                                         </div>

@@ -26,7 +26,7 @@ $formQueja.addEventListener("submit", async (e) => {
     correo: document.getElementById("correo-queja").value,
     telefono: document.getElementById("telefono-queja").value,
     matricula: document.getElementById("matricula-queja").value,
-    carrera: document.getElementById("carrera-quja").value,
+    carrera: document.getElementById("carrera-queja").value,
     semestre: document.getElementById("semestre-queja").value,
     grupo: document.getElementById("grupo-queja").value,
     turno: document.getElementById("turno-queja").value,
@@ -42,26 +42,30 @@ $formQueja.addEventListener("submit", async (e) => {
 
   console.log(quejaData);
 
-  try {
-    const response = await fetch(url_quejas_create_queja, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(quejaData),
-    });
-
-    const data = await response.json();
-    console.log("Respuesta del servidor:", data);
-
-    if (data.ok) {
-      alert(data.message);
-      window.location.href = procesos;
-    } else {
-      alert(data.message);
-    }
-  } catch (error) {
-    console.error("Error en fetch:", error);
-    alert("Ocurrió un error al enviar la queja.");
+  if (quejaData.folioProceso == "" || quejaData.folioQueja == "" || quejaData.fechaQueja == "" || quejaData.textoQueja == "") {
+    alert("Datos necesarios faltantes: folio, fecha o queja o sugerencia.");
+    return;
   }
+    try {
+      const response = await fetch(url_quejas_create_queja, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(quejaData),
+      });
+
+      const data = await response.json();
+      console.log("Respuesta del servidor:", data);
+
+      if (data.ok) {
+        alert(data.message);
+        window.location.href = procesos;
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("Error en fetch:", error);
+      alert("Ocurrió un error al enviar la queja.");
+    }
 }
 );
 

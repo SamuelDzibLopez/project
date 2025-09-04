@@ -42,7 +42,7 @@ try {
     }
 
     // ======================================
-    // 2. OBTENER QUEJA Y DATOS COMPLETOS DE USUARIOS
+    // 2. OBTENER QUEJA
     // ======================================
     $sqlQueja = "SELECT 
                     q.idQueja, q.fecha, q.folio, q.nombre, q.correo, q.telefono,
@@ -76,22 +76,48 @@ try {
         ];
     }
 
+    // ======================================
+    // 2.1 USUARIO VACÍO
+    // ======================================
+    $usuarioVacio = [
+        "idUsuario" => "",
+        "nombreCompleto" => "",
+        "apellidoPaterno" => "",
+        "apellidoMaterno" => "",
+        "fechaNacimiento" => "",
+        "telefono" => "",
+        "correoElectronico" => "",
+        "numeroTarjeta" => "",
+        "rol" => "",
+        "puesto" => "",
+        "departamento" => "",
+        "perfil" => "",
+        "estado" => "",
+        "fechaCreacion" => "",
+        "usuario" => "",
+        "fechaVigencia" => "",
+        "vigencia" => "",
+        "firmaElectronica" => ""
+    ];
+
     // Obtener datos de coordinador
-    $coordinador = null;
     if ($quejaData['idCoordinador']) {
         $stmt = $pdo->prepare("SELECT idUsuario, nombreCompleto, apellidoPaterno, apellidoMaterno, fechaNacimiento, telefono, correoElectronico, numeroTarjeta, rol, puesto, departamento, perfil, estado, fechaCreacion, usuario, fechaVigencia, vigencia, firmaElectronica
                                FROM usuarios WHERE idUsuario = ?");
         $stmt->execute([$quejaData['idCoordinador']]);
-        $coordinador = $stmt->fetch(PDO::FETCH_ASSOC);
+        $coordinador = $stmt->fetch(PDO::FETCH_ASSOC) ?: $usuarioVacio;
+    } else {
+        $coordinador = $usuarioVacio;
     }
 
     // Obtener datos de quien recibe
-    $recibe = null;
     if ($quejaData['idRecibe']) {
         $stmt = $pdo->prepare("SELECT idUsuario, nombreCompleto, apellidoPaterno, apellidoMaterno, fechaNacimiento, telefono, correoElectronico, numeroTarjeta, rol, puesto, departamento, perfil, estado, fechaCreacion, usuario, fechaVigencia, vigencia, firmaElectronica
                                FROM usuarios WHERE idUsuario = ?");
         $stmt->execute([$quejaData['idRecibe']]);
-        $recibe = $stmt->fetch(PDO::FETCH_ASSOC);
+        $recibe = $stmt->fetch(PDO::FETCH_ASSOC) ?: $usuarioVacio;
+    } else {
+        $recibe = $usuarioVacio;
     }
 
     // ======================================
