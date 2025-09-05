@@ -481,6 +481,16 @@ document.body.addEventListener("click", (e) => {
     if (modalConclusion) modalConclusion.style.display = "none";
   } else if (boton.matches(".btn-cerrar-modalActividad")) {
     if (modalActividad) modalActividad.style.display = "none";
+
+        const divParticipantes = document.getElementById(
+          "divModificarParticipantesActividad"
+        );
+        if (divParticipantes) divParticipantes.innerHTML = "";
+
+        const divContactados = document.getElementById(
+          "divModificarContactosActividad"
+        );
+        if (divContactados) divContactados.innerHTML = "";
   }
 });
 
@@ -526,7 +536,7 @@ $btnModificarNC.addEventListener("click", (e) => {
   );
 });
 
-//20. Evento para modificar NC
+//20. Evento para modificar actividad
 $btnModificarActividad.addEventListener("click", (e) => {
   if (modalActividad) modalActividad.style.display = "none";
 

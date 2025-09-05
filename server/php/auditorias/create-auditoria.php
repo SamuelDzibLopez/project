@@ -157,7 +157,7 @@ try {
             "Acción Correctiva",
             $folioAC,
             // estado inicial, puedes cambiar si tu lógica requiere otro estado
-            "Abierto"
+            "1"
         ]);
         $idProcesoAC = $pdo->lastInsertId();
 

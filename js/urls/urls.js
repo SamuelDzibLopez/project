@@ -22,9 +22,11 @@ export const url_procesos_obtener_procesos =  "/project/server/php/procesos/obte
 
 //Auditorias
 export const url_auditorias_create_auditoria = "/project/server/php/auditorias/create-auditoria.php";
+export const url_auditorias_obtener_info_auditoria = "/project/server/php/auditorias/obtener-info-proceso.php?idProceso=";
 
 //Quejas y Sugerencias
 export const url_quejas_create_queja = "/project/server/php/quejas/create-queja.php";
+export const url_quejas_obtener_info_queja = "/project/server/php/quejas/obtener-info-proceso.php?idProceso=";
 
 //Contactos
 export const url_contactos_obtener_contactos = "/project/server/php/contactos/obtener-contactos.php?pagina=";
