@@ -9,7 +9,7 @@ require_once './../../server/php/permisos.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuevo Proceso</title>
+    <title>Queja o Sugerencia</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="./../../styles/">
@@ -35,12 +35,12 @@ require_once './../../server/php/permisos.php';
                     <div class="div-main-ITM">
                         <div class="div-title">
                             <img src="./../../sources/icons/icon-proyectos.svg" alt="">
-                            <h2 class="font-title">Nuevo Proceso</h2>
+                            <h2 class="font-title">Queja o Sugerencia</h2>
                         </div>
 
                         <!-- Quejas y sugerencias -->
                         <div class="div-gray" id="Sujerencia">
-                            <form class="div-main-blur" id="form-quejas">
+                            <form class="div-main-blur" id="form-quejas-modificar">
 
                                 <div class="div-subtitle">
                                     <img src="/project/sources/icons/icon-proyectos.svg" alt="">
@@ -192,8 +192,7 @@ require_once './../../server/php/permisos.php';
                                     </div>
                                 </div>
                                 <div class="div_buttons">
-                                    <button type="submit" class="btn-apartado-center escalado" id="btn-queja">Crear
-                                        queja/sugerencia</button>
+                                    <button type="submit" class="btn-apartado-center escalado" id="btn-queja">Modificar queja/sugerencia</button>
                                 </div>
                             </form>
                         </div>
@@ -211,11 +210,7 @@ require_once './../../server/php/permisos.php';
 
 
     <script type="module" src="./../../js/nueva-queja.js"></script>
-
-    <!-- <script type="module" src="./../../js/nuevo-proceso.js"></script>
-    <script type="module" src="./../../js/auditoria-nueva.js"></script>
-    <script type="module" src="./../../js/pnc-nuevo.js"></script>
-    <script type="module" src="./../../js/nueva-ac.js"></script> -->
+    <script type="module" src="./../../js/queja.js"></script>
 </body>
 
 </html>
